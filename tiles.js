@@ -1,4 +1,6 @@
-
+/*
+ * Tile definitions.
+ */
 define(['crafty', 'constants'], function (Crafty, k) {
 
   Crafty.c('Tile', {

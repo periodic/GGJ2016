@@ -35,4 +35,15 @@ define({
     width: 40,
     height: 40,
   },
+
+  room: {
+    widthTiles: 13,
+    heightTiles: 13,
+  },
+
+  map: {
+    width: 4,
+    height: 4,
+    connectedness: 0.75,
+  }
 });
