@@ -31,8 +31,9 @@ define(['crafty', 'constants', 'player', 'util/center_text'], function(Crafty, k
 
 
   Crafty.scene('Level', function () {
-    Crafty.e('Player');
-    var reticle = Crafty.e('Reticle');
+    Crafty.e('Player')
+      .center(k.canvasWidthPx / 2, k.canvasHeightPx / 2);
+    Crafty.e('Reticle');
 
     Crafty.e('2D, Canvas, Mouse')
       .attr({
@@ -42,13 +43,16 @@ define(['crafty', 'constants', 'player', 'util/center_text'], function(Crafty, k
         y: 0,
       })
       .bind('MouseMove', function(e) {
-        var reticle = Crafty('Reticle');
-        reticle.attr({
-          x: Crafty.mousePos.x - reticle.w / 2,
-          y: Crafty.mousePos.y - reticle.h / 2,
-        });
+        Crafty.trigger("TargetMoved", e);
+      })
+      .bind('MouseDown', function(e) {
+        console.log("shoot!");
+        if (e.mouseButton == Crafty.mouseButtons.LEFT) {
+          Crafty.trigger("Shoot", new Crafty.math.Vector2D(Crafty.mousePos.x, Crafty.mousePos.y));
+        }
       })
       .bind('ViewportScroll', function (e) {
+        console.log("moving event catcher.");
         this.attr({
           x: -Crafty.viewport.x,
           y: -Crafty.viewport.y,

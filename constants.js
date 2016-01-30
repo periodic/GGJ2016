@@ -16,4 +16,23 @@ define({
     xMax: 40,
     yMax: 40,
   },
+
+  layers: {
+    background: 1,
+    obstacles: 2,
+    enemies: 3,
+    gun: 4,
+    player: 5,
+    bullets: 6,
+  },
+
+  bullet: {
+    speed: 200,
+    maxDistance: 200,
+  },
+
+  tile: {
+    width: 40,
+    height: 40,
+  },
 });
