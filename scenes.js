@@ -42,11 +42,7 @@ define(['crafty', 'constants', 'player', 'util/center_text'], function(Crafty, k
         x: 0,
         y: 0,
       })
-      .bind('MouseMove', function(e) {
-        Crafty.trigger("TargetMoved", e);
-      })
       .bind('MouseDown', function(e) {
-        console.log("shoot!");
         if (e.mouseButton == Crafty.mouseButtons.LEFT) {
           Crafty.trigger("Shoot", new Crafty.math.Vector2D(Crafty.mousePos.x, Crafty.mousePos.y));
         }
@@ -57,6 +53,9 @@ define(['crafty', 'constants', 'player', 'util/center_text'], function(Crafty, k
           x: -Crafty.viewport.x,
           y: -Crafty.viewport.y,
         });
+      })
+      .bind('MouseMove', function(e) {
+        Crafty.trigger("TargetMoved", e);
       });
 
     Crafty.viewport.follow(Crafty('Player'), 0, 0);

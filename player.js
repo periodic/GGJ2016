@@ -48,7 +48,7 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
     },
     events: {
       TargetMoved: function () {
-        var mouse = new Crafty.math.Vector2D(Crafty.mousePos.x, Crafty.mousePos.y)
+        var mouse = new Crafty.math.Vector2D(Crafty.mousePos.x, Crafty.mousePos.y);
         var d = mouse.clone().subtract(this.center());
         this._direction = d.clone().normalize();
         var angle = this._defaultDirection.angleTo(d) * 180 / Math.PI;
@@ -57,7 +57,6 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
         });
       },
       Shoot: function (e) {
-        console.log("shoot!");
         var direction = e.clone().subtract(this.center()).normalize();
         var velocity = direction.clone().scale(k.bullet.speed);
         var position = this.center().add(direction.clone().scale(40));
@@ -99,8 +98,10 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
   });
 
   Crafty.c('Reticle', {
+    _offsetX: 0,
+    _offsetY: 0,
     init: function () {
-      this.requires('2D, Canvas, Color, Center, Mouse')
+      this.requires('2D, Canvas, Color, Center')
         .attr({
           w: 10,
           h: 10,
