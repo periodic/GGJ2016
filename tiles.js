@@ -2,7 +2,7 @@
 define(['crafty', 'constants'], function (Crafty, k) {
 
   Crafty.c('Tile', {
-    required: '2D, Color', 
+    required: '2D, Color, Canvas', 
     init: function () {
       this.attr({
           w: k.tile.width,
@@ -24,14 +24,14 @@ define(['crafty', 'constants'], function (Crafty, k) {
   Crafty.c('Wall', {
     required: 'ImpassableTile',
     init: function () {
-      this.color("#333333");
+      this.color("#555555");
     },
   });
 
   Crafty.c('Floor', {
     required: 'Tile',
     init: function () {
-      this.color("#eeeeee");
+      this.color("#cccccc");
     },
   });
 });

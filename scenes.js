@@ -4,7 +4,7 @@
 define(['crafty', 'constants', 'player', 'tiles', 'util/center_text'], function(Crafty, k) {
 
   Crafty.scene('TitleScreen', function () {
-    Crafty.background('#CCCCCC');
+    Crafty.background('#cccccc');
 
     var listener = Crafty.e('2D, Keyboard')
       .bind('KeyDown', function () {
@@ -31,6 +31,7 @@ define(['crafty', 'constants', 'player', 'tiles', 'util/center_text'], function(
 
 
   Crafty.scene('Level', function () {
+    Crafty.background('#000000');
     Crafty.e('Player')
       .center(k.canvasWidthPx / 2, k.canvasHeightPx / 2);
     Crafty.e('Reticle');

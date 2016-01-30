@@ -2,7 +2,7 @@
  * Global constants and stuff that define how the game works.
  */
 define({
-  debug: true,
+  debug: false,
 
   canvasWidthPx: 640,
   canvasHeightPx: 480,
