@@ -1,7 +1,7 @@
 /*
  * Defines the scenes for our game.
  */
-define(['crafty', 'constants', 'player', 'util/center_text'], function(Crafty, k) {
+define(['crafty', 'constants', 'player', 'tiles', 'util/center_text'], function(Crafty, k) {
 
   Crafty.scene('TitleScreen', function () {
     Crafty.background('#CCCCCC');
@@ -48,7 +48,6 @@ define(['crafty', 'constants', 'player', 'util/center_text'], function(Crafty, k
         }
       })
       .bind('ViewportScroll', function (e) {
-        console.log("moving event catcher.");
         this.attr({
           x: -Crafty.viewport.x,
           y: -Crafty.viewport.y,
@@ -57,6 +56,27 @@ define(['crafty', 'constants', 'player', 'util/center_text'], function(Crafty, k
       .bind('MouseMove', function(e) {
         Crafty.trigger("TargetMoved", e);
       });
+
+    var rows = k.canvasWidthPx / k.tile.width;
+    var cols = k.canvasHeightPx / k.tile.height;
+
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        var x = r * k.tile.width;
+        var y = c * k.tile.height;
+        if (r == 0 || c == 0 || r == rows - 1 || c == cols - 1) {
+          Crafty.e('Wall').attr({
+            x: x,
+            y: y,
+          });
+        } else {
+          Crafty.e('Floor').attr({
+            x: x,
+            y: y,
+          });
+        }
+      }
+    }
 
     Crafty.viewport.follow(Crafty('Player'), 0, 0);
   });

@@ -2,10 +2,10 @@
  * Global constants and stuff that define how the game works.
  */
 define({
+  debug: true,
+
   canvasWidthPx: 640,
   canvasHeightPx: 480,
-
-
 
   characterWidth: 40,
   characterHeight: 40,
@@ -28,7 +28,7 @@ define({
 
   bullet: {
     speed: 200,
-    maxDistance: 200,
+    maxDistance: 1000,
   },
 
   tile: {

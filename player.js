@@ -14,12 +14,20 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
         .color("red")
         .origin("center")
         .fourway(k.characterSpeed)
-        .collision(
-          [k.characterCollision.xMin, k.characterCollision.yMin],
-          [k.characterCollision.xMin, k.characterCollision.yMax],
-          [k.characterCollision.xMax, k.characterCollision.yMax],
-          [k.characterCollision.xMax, k.characterCollision.yMin])
+        .collision()
         .attach(Crafty.e('Gun'));
+    },
+    events: {
+      Moved: function (e) {
+        if (this.hit('ImpassableTile')) {
+          if (e.axis == 'x') {
+            this.x = e.oldValue;
+          }
+          if (e.axis == 'y') {
+            this.y = e.oldValue;
+          }
+        }
+      },
     },
   });
 
@@ -80,6 +88,8 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
           h: 5,
           z: k.layers.bullets,
         })
+        .collision()
+        .checkHits('ImpassableTile')
         .color('yellow');
       this._travelled = {x: 0, y: 0};
     },
@@ -93,6 +103,9 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
         if (this.center().subtract(this._originalPosition).magnitude() > k.bullet.maxDistance) {
           this.destroy();
         }
+      },
+      HitOn: function (hitData) {
+        this.destroy();
       },
     },
   });
