@@ -4,7 +4,7 @@
 define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, k) {
 
   Crafty.sprite(
-    20, 34, 'assets/Sprites/enemies.png',
+    40, 68, 'assets/Sprites/enemies.png',
     {
       'PoliceSprite': [0, 0],
       'BruteSprite': [1, 0],
@@ -24,8 +24,8 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
     required: 'Enemy, PoliceSprite',
     init: function () {
       this.attr({
-        w: 17,
-        h: 34,
+        w: 34,
+        h: 68,
       });
     },
   });
@@ -34,8 +34,8 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
     required: 'Enemy, BruteSprite',
     init: function () {
       this.attr({
-        w: 19,
-        h: 32,
+        w: 38,
+        h: 64,
       });
     },
   });
@@ -44,8 +44,8 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
     required: 'Enemy, FemaleSprite',
     init: function () {
       this.attr({
-        w: 12,
-        h: 30,
+        w: 24,
+        h: 60,
       });
     },
   });
