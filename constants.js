@@ -10,7 +10,7 @@ define({
   player: {
     width: 30,
     height: 30,
-    speed: 100,
+    speed: 200,
   },
 
   gun: {
@@ -30,7 +30,7 @@ define({
   },
 
   bullet: {
-    speed: 200,
+    speed: 600,
     maxDistance: 1000,
   },
 
@@ -40,8 +40,8 @@ define({
   },
 
   room: {
-    width: 5,
-    height: 5,
+    width: 13,
+    height: 13,
   },
 
   map: {
