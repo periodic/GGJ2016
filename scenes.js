@@ -1,7 +1,7 @@
 /*
  * Defines the scenes for our game.
  */
-define(['crafty', 'constants', 'player', 'tiles', 'util/center_text'], function(Crafty, k) {
+define(['crafty', 'constants', 'player', 'tiles', 'map', 'util/center_text'], function(Crafty, k) {
 
   Crafty.scene('TitleScreen', function () {
     Crafty.background('#cccccc');
@@ -32,8 +32,7 @@ define(['crafty', 'constants', 'player', 'tiles', 'util/center_text'], function(
 
   Crafty.scene('Level', function () {
     Crafty.background('#000000');
-    Crafty.e('Player')
-      .center(k.canvasWidthPx / 2, k.canvasHeightPx / 2);
+    Crafty.e('Player').center(0, 0);
     Crafty.e('Reticle');
 
     Crafty.e('2D, Canvas, Mouse')
@@ -57,6 +56,9 @@ define(['crafty', 'constants', 'player', 'tiles', 'util/center_text'], function(
       .bind('MouseMove', function(e) {
         Crafty.trigger("TargetMoved", e);
       });
+
+    console.log("Adding a map?");
+    Crafty.e('Map');
 
     Crafty.viewport.follow(Crafty('Player'), 0, 0);
   });

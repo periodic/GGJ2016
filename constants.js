@@ -7,8 +7,8 @@ define({
   canvasWidthPx: 640,
   canvasHeightPx: 480,
 
-  characterWidth: 40,
-  characterHeight: 40,
+  characterWidth: 30,
+  characterHeight: 30,
   characterSpeed: 100,
   characterCollision: {
     xMin: 0,
@@ -37,8 +37,8 @@ define({
   },
 
   room: {
-    widthTiles: 13,
-    heightTiles: 13,
+    width: 5,
+    height: 5,
   },
 
   map: {
