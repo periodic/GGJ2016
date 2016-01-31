@@ -2,7 +2,7 @@
  * Global constants and stuff that define how the game works.
  */
 define({
-  debug: false,
+  debug: true,
 
   canvasWidthPx: 800,
   canvasHeightPx: 600,
@@ -46,8 +46,8 @@ define({
   },
 
   room: {
-    width: 13,
-    height: 13,
+    width: 15,
+    height: 15,
     spriteWidth: 480,
     spriteHeight: 480,
   },
