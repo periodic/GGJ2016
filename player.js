@@ -2,7 +2,7 @@
  * The player entity.
  */
 
-define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
+define(['crafty', 'constants', 'util/center', 'util/health', 'util/health_bar'], function (Crafty, k) {
   Crafty.sprite(
     k.player.width,
     k.player.height,
@@ -12,13 +12,14 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
     });
 
   Crafty.c('Player', {
-    required: '2D, Canvas, Fourway, Collision, Color, Center, Player1',
+    required: '2D, Canvas, Fourway, Collision, Color, Center, Player1, Health',
     init: function () {
       this.attr({
           w: k.player.width,
           h: k.player.height,
           z: k.layers.player,
         })
+        .health(k.player.maxHealth)
         .origin("center")
         .fourway(k.player.speed)
         .collision(
@@ -31,6 +32,10 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
         if (k.debug) {
           this.addComponent('WiredHitBox');
         }
+
+        Crafty.e("HealthBar")
+          .track(this)
+          .color(k.player.healthBar.color);
     },
     events: {
       Moved: function (e) {
@@ -47,7 +52,7 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
   });
 
   Crafty.c('Gun', {
-    required:'2D, Canvas, Center',
+    required: '2D, Canvas, Center',
     init: function () {
       this.attr({
           w: k.player.height,

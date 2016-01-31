@@ -11,11 +11,19 @@ define({
     width: 32,
     height: 32,
     speed: 200,
+    maxHealth: 100,
     collision: {
       xMin: 8,
       xMax: 28,
       yMin: 2,
       yMax: 26,
+    },
+    healthBar: {
+      x: 10,
+      y: 10,
+      w: 200,
+      h: 20,
+      color: 'green',
     },
   },
 
@@ -33,6 +41,7 @@ define({
     gun: 4,
     player: 5,
     bullets: 6,
+    ui: 7,
   },
 
   bullet: {
