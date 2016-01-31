@@ -7,13 +7,13 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
     required: '2D, Canvas, Fourway, Collision, Color, Center',
     init: function () {
       this.attr({
-          w: k.characterWidth,
-          h: k.characterHeight,
+          w: k.player.width,
+          h: k.player.height,
           z: k.layers.player,
         })
         .color("red")
         .origin("center")
-        .fourway(k.characterSpeed)
+        .fourway(k.player.speed)
         .collision()
         .attach(Crafty.e('Gun'));
     },
@@ -35,18 +35,18 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
     required:'2D, Canvas, Center',
     init: function () {
       this.attr({
-          w: k.characterWidth,
-          h: k.characterHeight,
+          w: k.player.height,
+          h: k.player.width,
           z: k.layers.gun,
         })
         .origin('center')
         .attach(Crafty.e('2D, Canvas, Color')
           .origin('center')
           .attr({
-            w: 20,
-            h: 5,
-            x: 40,
-            y: 20 - 2.5,
+            w: k.gun.width,
+            h: k.gun.height,
+            x: k.gun.offsetX,
+            y: k.gun.offsetY,
             z: k.layers.gun,
           })
           .color("blue")
@@ -67,7 +67,7 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
       Shoot: function (e) {
         var direction = e.clone().subtract(this.center()).normalize();
         var velocity = direction.clone().scale(k.bullet.speed);
-        var position = this.center().add(direction.clone().scale(40));
+        var position = this.center().add(direction.clone().scale(k.gun.width));
         var bullet = Crafty.e('Bullet')
           .center(position)
           .originalPosition(position)

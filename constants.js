@@ -7,14 +7,17 @@ define({
   canvasWidthPx: 640,
   canvasHeightPx: 480,
 
-  characterWidth: 30,
-  characterHeight: 30,
-  characterSpeed: 100,
-  characterCollision: {
-    xMin: 0,
-    ymin: 0,
-    xMax: 40,
-    yMax: 40,
+  player: {
+    width: 30,
+    height: 30,
+    speed: 100,
+  },
+
+  gun: {
+    width: 15,
+    height: 5,
+    offsetX: 30,
+    offsetY: 10,
   },
 
   layers: {
@@ -44,7 +47,7 @@ define({
   map: {
     width: 4,
     height: 4,
-    connectedness: 0.75,
+    connectedness: 0.5,
   },
 
   NORTH: 0,
