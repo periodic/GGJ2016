@@ -12,7 +12,6 @@ define({
     height: 64,
     speed: 200,
     maxHealth: 100,
-    fireRate: 0.5,
     collision: {
       xMin: 26,
       xMax: 70,
@@ -26,13 +25,13 @@ define({
       h: 20,
       color: 'green',
     },
+    fireRate: 0.5,
+    bulletSpeed: 600,
+    bulletDamage: 30,
   },
 
   gun: {
-    width: 15,
-    height: 5,
-    offsetX: 30,
-    offsetY: 10,
+    offset: 60,
   },
 
   layers: {
@@ -46,7 +45,6 @@ define({
   },
 
   bullet: {
-    speed: 600,
     maxDistance: 1000,
   },
 
@@ -61,11 +59,11 @@ define({
   },
 
   map: {
-    rows: 10,
+    rows: 4,
     columns: 4,
     originR: 0,
     originC: 0,
-    exitR: 9,
+    exitR: 3,
     exitC: 3,
     connectedness: 0.2,
   },

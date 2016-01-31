@@ -12,7 +12,7 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
     });
 
   Crafty.c('Enemy', {
-    required: '2D, Canvas, Health, Collision, Center',
+    required: '2D, Canvas, Health, Motion, Collision, Center',
     init: function () {
       this.attr({
         z: k.layers.enemies,
@@ -24,9 +24,10 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
     required: 'Enemy, PoliceSprite',
     init: function () {
       this.attr({
-        w: 34,
-        h: 68,
-      });
+          w: 34,
+          h: 68,
+        })
+        .collision();
     },
   });
 
@@ -34,9 +35,10 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
     required: 'Enemy, BruteSprite',
     init: function () {
       this.attr({
-        w: 38,
-        h: 64,
-      });
+          w: 38,
+          h: 64,
+        })
+        .collision();
     },
   });
 
@@ -44,9 +46,10 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
     required: 'Enemy, FemaleSprite',
     init: function () {
       this.attr({
-        w: 24,
-        h: 60,
-      });
+          w: 24,
+          h: 60,
+        })
+        .collision();
     },
   });
 });

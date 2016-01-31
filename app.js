@@ -11,7 +11,7 @@ require.config({
     'text': 'lib/text',
   },
   paths: {
-    'crafty': 'lib/crafty-min',
+    'crafty': 'lib/crafty',
   },
   shim: {
     'lib/crafty-min': {
