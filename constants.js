@@ -56,10 +56,8 @@ define({
   },
 
   room: {
-    width: 15,
-    height: 15,
-    spriteWidth: 480,
-    spriteHeight: 480,
+    width: 19,
+    height: 19,
   },
 
   map: {
