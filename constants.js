@@ -8,16 +8,16 @@ define({
   canvasHeightPx: 600,
 
   player: {
-    width: 32,
+    width: 48,
     height: 32,
     speed: 200,
     maxHealth: 100,
     fireRate: 0.5,
     collision: {
-      xMin: 8,
-      xMax: 28,
-      yMin: 2,
-      yMax: 26,
+      xMin:13,
+      xMax: 35,
+      yMin: 5,
+      yMax: 27,
     },
     healthBar: {
       x: 10,
