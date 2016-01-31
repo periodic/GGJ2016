@@ -67,7 +67,7 @@ define({
     originC: 0,
     exitR: 9,
     exitC: 3,
-    connectedness: 0.4,
+    connectedness: 0.2,
   },
 
   NORTH: 0,
