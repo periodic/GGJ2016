@@ -4,8 +4,8 @@
 define({
   debug: false,
 
-  canvasWidthPx: 640,
-  canvasHeightPx: 480,
+  canvasWidthPx: 800,
+  canvasHeightPx: 600,
 
   player: {
     width: 32,
