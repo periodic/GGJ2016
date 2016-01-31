@@ -3,26 +3,36 @@
  */
 define(['constants'], function (k) {
 
-  function emptyExitGrid() {
+  function emptyMap(height, width, originR, originC, targetR, targetC) {
     var rows = [];
-    for (var r = 0; r < k.map.height * 2 - 1; r++) {
-      var row_length = k.map.width;
-      if (r % 2 == 0) row_length = k.map.width - 1;
+    for (var r = 0; r < height * 2 - 1; r++) {
+      var row_length = width;
+      if (r % 2 == 0) row_length = width - 1;
       rows[r] = [];
       for (var c = 0; c < row_length; c++) {
         rows[r].push(true);
       }
     }
-    return rows;
+    return {
+      exitGrid: rows,
+      width: width,
+      height: height,
+      originR: originR,
+      originC: originC,
+      targetR: targetR,
+      targetC: targetC,
+    };
   }
 
-  function exitsFor(r, c, exitGrid) {
+  function exitsFor(r, c, map) {
     var exits = [];
 
-    if (exitGrid[2*r - 1] && exitGrid[2*r - 1][c]) exits.push(k.NORTH);
-    if (exitGrid[2*r + 1] && exitGrid[2*r + 1][c]) exits.push(k.SOUTH);
-    if (exitGrid[2*r    ] && exitGrid[2*r    ][c]) exits.push(k.EAST);
-    if (exitGrid[2*r    ] && exitGrid[2*r    ][c - 1]) exits.push(k.WEST);
+    var grid = map.exitGrid;
+
+    if (grid[2*r - 1] && grid[2*r - 1][c]) exits.push(k.NORTH);
+    if (grid[2*r + 1] && grid[2*r + 1][c]) exits.push(k.SOUTH);
+    if (grid[2*r    ] && grid[2*r    ][c]) exits.push(k.EAST);
+    if (grid[2*r    ] && grid[2*r    ][c - 1]) exits.push(k.WEST);
 
     return exits;
   }
@@ -39,14 +49,14 @@ define(['constants'], function (k) {
     return [r, c];
   }
 
-  function reachable(r, c, exitGrid) {
+  function reachable(map) {
     // Boring DFS.
-    var stack = [[r,c]];
+    var stack = [[map.originR,map.originC]];
     var tileGrid = [];
 
-    for (var r = 0; r < k.map.height; r++) {
+    for (var r = 0; r < map.height; r++) {
       tileGrid[r] = [];
-      for (var c = 0; c < k.map.width; c++) {
+      for (var c = 0; c < map.width; c++) {
         tileGrid[r].push(false);
       }
     }
@@ -58,7 +68,7 @@ define(['constants'], function (k) {
 
       tileGrid[r][c] = true;
 
-      var exits = exitsFor(r, c, exitGrid);
+      var exits = exitsFor(r, c, map);
 
       var neighbors = exits.map(function (dir) {
         return getCoordFor(r, c, dir);
@@ -75,65 +85,58 @@ define(['constants'], function (k) {
     return tileGrid;
   }
 
-  function removeRandomExit(originR, originC, targetR, targetC, exitGrid) {
-    var maxR = (k.map.height - 1) * 2;
+  function removeRandomExit(map) {
+    var maxR = (map.height - 1) * 2;
     var r = Math.floor(Math.random() * maxR);
     if (r % 2 == 0) {
-      var maxC = k.map.width - 2;
+      var maxC = map.width - 2;
     } else {
-      var maxC = k.map.width - 1;
+      var maxC = map.width - 1;
     }
     var c = Math.floor(Math.random() * maxC);
 
-    exitGrid[r][c] = false;
+    map.exitGrid[r][c] = false;
 
-    var reachableTiles = reachable(originR, originC, exitGrid);
+    var reachableTiles = reachable(map);
 
-    if (!reachableTiles[targetR][targetC]) {
-      exitGrid[r][c] = true;
+    if (!reachableTiles[map.targetR][map.targetC]) {
+      map.exitGrid[r][c] = true;
       return false;
     } else {
       return true;
     }
   }
 
-  function trimMap(originR, originC, targetR, targetC, exitGrid) {
-    var numExits = (k.map.width - 1) * k.map.height
-                 + (k.map.width) * (k.map.height + 1);
+  function trimMap(map) {
+    var numExits = (map.width - 1) * map.height
+                 + (map.width) * (map.height + 1);
 
     var exitsToRemove = (1 - k.map.connectedness) * numExits;
 
     for (var i = 0; i < exitsToRemove; i++) {
-      removeRandomExit(originR, originC, targetR, targetC, exitGrid);
+      removeRandomExit(map);
     }
   }
 
-  function convertToTiles(originR, originC, exitGrid) {
-    var reachableTiles = reachable(originR, originC, exitGrid);
-    for (var r = 0; r < k.map.width; r++) {
-      for (var c = 0; c < k.map.width; c++) {
+  function convertToTiles(map) {
+    var reachableTiles = reachable(map);
+    for (var r = 0; r < map.height; r++) {
+      for (var c = 0; c < map.width; c++) {
         if (reachableTiles[r][c]) {
-          reachableTiles[r][c] = exitsFor(r, c, exitGrid);
+          reachableTiles[r][c] = exitsFor(r, c, map);
         }
       }
     }
     return reachableTiles;
   }
 
-  function generateMap(originR, originC, targetR, targetC) {
-    var exitGrid = emptyExitGrid();
-    trimMap(originR, originC, targetR, targetC, exitGrid);
-    return convertToTiles(originR, originC, exitGrid);
+  function generateMap(height, width, originR, originC, targetR, targetC) {
+    var map = emptyMap(height, width, originR, originC, targetR, targetC);
+    trimMap(map);
+    return convertToTiles(map);
   }
 
   return {
-    /*
-    emptyExitGrid : emptyExitGrid,
-    exitsFor: exitsFor,
-    reachable: reachable,
-    removeRandomExit: removeRandomExit,
-    trimMap: trimMap,
-    */
     generateMap: generateMap,
   };
 });

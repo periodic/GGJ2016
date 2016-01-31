@@ -4,7 +4,7 @@
 define(['crafty', 'constants', 'player', 'tiles', 'map', 'util/center_text'], function(Crafty, k) {
 
   Crafty.scene('TitleScreen', function () {
-    Crafty.background('#cccccc');
+    Crafty.background('#000000');
 
     var listener = Crafty.e('2D, Keyboard')
       .bind('KeyDown', function () {
@@ -13,7 +13,7 @@ define(['crafty', 'constants', 'player', 'tiles', 'map', 'util/center_text'], fu
 
     var title = Crafty.e('CenterText')
       .textFont({weight: 'bold', size: '36px', align: 'center'})
-      .textColor("#000000")
+      .textColor("#ffffff")
       .text('Global Game Jam 2016')
       .centerHorizontal()
       .attr({
@@ -21,7 +21,7 @@ define(['crafty', 'constants', 'player', 'tiles', 'map', 'util/center_text'], fu
       });
     var instructions = Crafty.e('CenterText')
       .textFont({size: '20px', align: 'center'})
-      .textColor("#000000")
+      .textColor("#ffffff")
       .text('Press any key to begin')
       .centerHorizontal()
       .attr({
@@ -37,8 +37,8 @@ define(['crafty', 'constants', 'player', 'tiles', 'map', 'util/center_text'], fu
 
     Crafty.e('2D, Canvas, Mouse')
       .attr({
-        w: k.canvasWidthPx,
-        h: k.canvasHeightPx,
+        w: Crafty.viewport.width,
+        h: Crafty.viewport.height,
         x: 0,
         y: 0,
       })

@@ -7,7 +7,13 @@ define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles'], funct
 
   Crafty.c('Map', {
     init: function () {
-      var rooms = map.generateMap(0,0,3,3);
+      var rooms = map.generateMap(
+        k.map.rows,
+        k.map.columns,
+        k.map.originR,
+        k.map.originC,
+        k.map.exitR,
+        k.map.exitC);
 
       var roomWidth = k.room.width * k.tile.width;
       var roomHeight = k.room.height * k.tile.height;
@@ -15,16 +21,18 @@ define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles'], funct
       var baseOffsetX = - roomWidth / 2;
       var baseOffsetY = - roomHeight / 2;
 
-      for (var r = 0; r < k.map.width; r++) {
-        for (var c = 0; c < k.map.width; c++) {
-          if (rooms[r][c]) {
-            Crafty.e('Room').room(rooms[r][c]).attr({
+      rooms.forEach(function (row, r) {
+        row.forEach(function (room, c) {
+          if (room) {
+            if (typeof(room) !== "object") debugger;
+
+            Crafty.e('Room').room(room).attr({
               x: c * roomWidth + baseOffsetX,
               y: r * roomHeight + baseOffsetY,
             });
           }
-        }
-      }
+        });
+      });
     },
   });
 
@@ -108,6 +116,7 @@ define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles'], funct
 
       if (matchingTemplates.length == 0) {
         console.error("Could not find a matching template for room configuration", directions);
+        debugger;
       }
 
       var i = Math.floor(Math.random() * matchingTemplates.length);

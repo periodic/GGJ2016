@@ -8,11 +8,11 @@ define(['crafty', 'constants'], function(Crafty, k) {
         .textColor('#FFFFFF');
     },
     centerHorizontal: function () {
-      this.x = (k.canvasWidthPx - this._w) / 2;
+      this.x = (Crafty.viewport.width - this._w) / 2;
       return this;
     },
     centerVertical: function () {
-      this.y = (k.canvasHeightPx - this._h) / 2;
+      this.y = (Crafty.viewport.height - this._h) / 2;
       return this;
     }
   });

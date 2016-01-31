@@ -53,9 +53,13 @@ define({
   },
 
   map: {
-    width: 4,
-    height: 4,
-    connectedness: 0.5,
+    rows: 10,
+    columns: 4,
+    originR: 0,
+    originC: 0,
+    exitR: 9,
+    exitC: 3,
+    connectedness: 0.4,
   },
 
   NORTH: 0,
