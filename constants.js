@@ -35,13 +35,15 @@ define({
   },
 
   tile: {
-    width: 40,
-    height: 40,
+    width: 32,
+    height: 32,
   },
 
   room: {
     width: 13,
     height: 13,
+    spriteWidth: 480,
+    spriteHeight: 480,
   },
 
   map: {

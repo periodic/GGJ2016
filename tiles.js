@@ -26,14 +26,14 @@ define(['crafty', 'constants'], function (Crafty, k) {
   Crafty.c('Wall', {
     required: 'ImpassableTile',
     init: function () {
-      this.color("#555555");
+      // this.color("#555555");
     },
   });
 
   Crafty.c('Floor', {
     required: 'Tile',
     init: function () {
-      this.color("#cccccc");
+      // this.color("#cccccc");
     },
   });
 });

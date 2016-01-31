@@ -15,8 +15,6 @@ define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles'], funct
       var baseOffsetX = - roomWidth / 2;
       var baseOffsetY = - roomHeight / 2;
 
-      console.log(rooms);
-
       for (var r = 0; r < k.map.width; r++) {
         for (var c = 0; c < k.map.width; c++) {
           if (rooms[r][c]) {
@@ -31,14 +29,20 @@ define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles'], funct
   });
 
   Crafty.c('Room', {
-    required: '2D, Canvas',
+    required: '2D, Canvas, DebugRectangle',
     init: function () {
       this.attr({
-        w: k.tile.width * k.room.width,
-        h: k.tile.height * k.room.height,
-        x: 0,
-        y: 0,
-      });
+          w: k.tile.height * k.room.width,
+          h: k.tile.width * k.room.height,
+          x: 0,
+          y: 0,
+          z: k.layers.background,
+        })
+        .origin('center');
+      if (k.debug) {
+        this.debugStroke("green")
+          .debugRectangle(this);
+      }
     },
     room: function (directions) {
       var template = this._chooseTemplate(directions);
@@ -46,7 +50,8 @@ define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles'], funct
       // number of turns from template to directions.
       var turns = this._canFitToTemplate(template.exits, directions);
 
-      console.log("Choose directions ", template.exits, " to match ", directions, " in ", turns, " turns");
+      this.addComponent(template.sprite);
+      this.rotation = turns * 90;
 
       for (var r = 0; r < k.room.height; r++) {
         for (var c = 0; c < k.room.width; c++) {
@@ -55,49 +60,22 @@ define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles'], funct
 
           var tileSymbol = this._getTile(r, c, turns, template);
 
-          if (tileSymbol === 'X') {
+          if (tileSymbol === 'X' || tileSymbol === undefined) {
             this.attach(
               Crafty.e('Wall').attr({
                 x: x,
                 y: y,
+                z: k.layers.obstacles,
               }));
-          } else {
+          }/*  else {
             this.attach(
               Crafty.e('Floor').attr({
                 x: x,
                 y: y,
               }));
-          }
-
-          /*
-          if (r == 0 || c == 0 || r == k.room.width - 1 || c == k.room.height - 1) {
-            if (((r == 0 || r == k.room.width - 1) && c == (k.room.height - 1) / 2) ||
-                ((c == 0 || c == k.room.height - 1) && r == (k.room.width - 1) / 2)) {
-              // Door, handle it later.
-            } else {
-              this.attach(
-                Crafty.e('Wall').attr({
-                  x: x,
-                  y: y,
-                }));
-            }
-          } else {
-            this.attach(
-              Crafty.e('Floor').attr({
-                x: x,
-                y: y,
-              }));
-          }
-          */
+            } */
         }
       }
-
-      /*
-      this._addDoorIfOpen((k.room.width - 1) / 2, 0,                       k.NORTH, directions);
-      this._addDoorIfOpen(k.room.width - 1,       (k.room.height - 1) / 2, k.EAST,  directions);
-      this._addDoorIfOpen((k.room.width - 1) / 2, k.room.height - 1,       k.SOUTH, directions);
-      this._addDoorIfOpen(0,                      (k.room.height - 1) / 2, k.WEST,  directions);
-      */
 
       return this;
     },
@@ -122,26 +100,6 @@ define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles'], funct
         return [c, k.room.width - 1 - r];
       }
     },
-
-    /*
-    _addDoorIfOpen: function (r, c, dir, directions) {
-      var x = r * k.tile.width;
-      var y = c * k.tile.height;
-      if (directions.indexOf(dir) >= 0) {
-        this.attach(
-          Crafty.e('Floor').attr({
-            x: x,
-            y: y,
-          }));
-      } else {
-        this.attach(
-          Crafty.e('Wall').attr({
-            x: x,
-            y: y,
-          }));
-      }
-    },
-    */
 
     _chooseTemplate: function (directions) {
       var matchingTemplates = roomData.filter(function (template) {

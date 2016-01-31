@@ -8,12 +8,28 @@
  *  y: The y-position in the grid of rooms for this specific room's image.
  *  room: an ascii-art representation of the room.
  */
-define(['constants'], function (k) {
+define(['crafty', 'constants'], function (Crafty, k) {
+
+  Crafty.sprite(
+    k.tile.width * k.room.width,
+    k.tile.height * k.room.height,
+    'assets/Rooms/rooms-sprite.png',
+    {
+      'Deadend1': [0, 0],
+      'Crossing1': [1, 0],
+      'Corner1': [2, 0],
+      'Hallway1': [0, 1],
+      'Junction1': [1, 1],
+      'Crossing2': [2, 1],
+      'Hallway2': [0, 2],
+      'Crossing3': [1, 2],
+      'Deadend2': [2, 2],
+    });
+
+
   return [{
     exits: [k.SOUTH,k.NORTH,k.EAST,k.WEST],
-    backgroundFile: "assets/rooms.png",
-    x: 0,
-    y: 0,
+    sprite: 'Crossing1',
     room: [
       "XXXXXX XXXXXX",
       "XXXX     XXXX",
@@ -31,9 +47,7 @@ define(['constants'], function (k) {
     ],
   },{
     exits: [k.SOUTH,k.WEST],
-    backgroundFile: "assets/rooms.png",
-    x: 0,
-    y: 0,
+    sprite: 'Corner1',
     room: [
       "XXXXXXXXXXXXX",
       "XXXXXXXXXXXXX",
@@ -51,9 +65,7 @@ define(['constants'], function (k) {
     ],
   },{
     exits: [k.SOUTH],
-    backgroundFile: "assets/rooms.png",
-    x: 0,
-    y: 0,
+    sprite: 'Deadend1',
     room: [
       "XXXXXXXXXXXXX",
       "X           X",
@@ -71,9 +83,7 @@ define(['constants'], function (k) {
     ],
   },{
     exits: [k.SOUTH,k.NORTH],
-    backgroundFile: "assets/rooms.png",
-    x: 0,
-    y: 0,
+    sprite: 'Hallway1',
     room: [
       "XXXXXX XXXXXX",
       "XXXX     XXXX",
@@ -91,9 +101,7 @@ define(['constants'], function (k) {
     ],
   },{
     exits: [k.SOUTH,k.EAST,k.WEST],
-    backgroundFile: "assets/rooms.png",
-    x: 0,
-    y: 0,
+    sprite: 'Junction1',
     room: [
       "XXXXXXXXXXXXX",
       "XXXXXXXXXXXXX",
@@ -111,9 +119,7 @@ define(['constants'], function (k) {
     ],
   },{
     exits: [k.SOUTH],
-    backgroundFile: "assets/rooms.png",
-    x: 0,
-    y: 0,
+    sprite: 'Deadend2',
     room: [
       "XXXXXXXXXXXXX",
       "X           X",
@@ -131,9 +137,7 @@ define(['constants'], function (k) {
     ],
   },{
     exits: [k.SOUTH,k.NORTH,k.EAST,k.WEST],
-    backgroundFile: "assets/rooms.png",
-    x: 0,
-    y: 0,
+    sprite: 'Crossing3',
     room: [
       "XXXXXX XXXXXX",
       "X           X",
@@ -151,9 +155,7 @@ define(['constants'], function (k) {
     ],
   },{
     exits: [k.SOUTH,k.NORTH,k.EAST,k.WEST],
-    backgroundFile: "assets/rooms.png",
-    x: 0,
-    y: 0,
+    sprite: 'Crossing2',
     room: [
       "XXXXXX XXXXXX",
       "X           X",
@@ -171,9 +173,7 @@ define(['constants'], function (k) {
     ],
   },{
     exits: [k.SOUTH,k.NORTH],
-    backgroundFile: "assets/rooms.png",
-    x: 0,
-    y: 0,
+    sprite: 'Hallway2',
     room: [
       "XXXXXX XXXXXX",
       "XXXX     XXXX",
