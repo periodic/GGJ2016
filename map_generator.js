@@ -3,11 +3,6 @@
  */
 define(['constants'], function (k) {
 
-  var NORTH = 0;
-  var EAST = 1;
-  var SOUTH = 2;
-  var WEST = 3;
-
   function emptyExitGrid() {
     var rows = [];
     for (var r = 0; r < k.map.height * 2 - 1; r++) {
@@ -24,22 +19,22 @@ define(['constants'], function (k) {
   function exitsFor(r, c, exitGrid) {
     var exits = [];
 
-    if (exitGrid[2*r - 1] && exitGrid[2*r - 1][c]) exits.push(NORTH);
-    if (exitGrid[2*r + 1] && exitGrid[2*r + 1][c]) exits.push(SOUTH);
-    if (exitGrid[2*r    ] && exitGrid[2*r    ][c]) exits.push(EAST);
-    if (exitGrid[2*r    ] && exitGrid[2*r    ][c - 1]) exits.push(WEST);
+    if (exitGrid[2*r - 1] && exitGrid[2*r - 1][c]) exits.push(k.NORTH);
+    if (exitGrid[2*r + 1] && exitGrid[2*r + 1][c]) exits.push(k.SOUTH);
+    if (exitGrid[2*r    ] && exitGrid[2*r    ][c]) exits.push(k.EAST);
+    if (exitGrid[2*r    ] && exitGrid[2*r    ][c - 1]) exits.push(k.WEST);
 
     return exits;
   }
 
   function getCoordFor(r, c, direction) {
-    if (direction == NORTH)
+    if (direction == k.NORTH)
       return [r - 1, c];
-    if (direction == EAST)
+    if (direction == k.EAST)
       return [r, c + 1];
-    if (direction == SOUTH)
+    if (direction == k.SOUTH)
       return [r + 1, c];
-    if (direction == WEST)
+    if (direction == k.WEST)
       return [r, c - 1];
     return [r, c];
   }
@@ -61,7 +56,6 @@ define(['constants'], function (k) {
       var r = curr[0];
       var c = curr[1];
 
-      console.log("Visting ", r, c);
       tileGrid[r][c] = true;
 
       var exits = exitsFor(r, c, exitGrid);
@@ -91,7 +85,6 @@ define(['constants'], function (k) {
     }
     var c = Math.floor(Math.random() * maxC);
 
-    console.log("Removing: ", r, c);
     exitGrid[r][c] = false;
 
     var reachableTiles = reachable(originR, originC, exitGrid);
@@ -134,11 +127,6 @@ define(['constants'], function (k) {
   }
 
   return {
-    NORTH: NORTH,
-    EAST: EAST,
-    SOUTH: SOUTH,
-    WEST: WEST,
-
     /*
     emptyExitGrid : emptyExitGrid,
     exitsFor: exitsFor,

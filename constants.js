@@ -45,5 +45,10 @@ define({
     width: 4,
     height: 4,
     connectedness: 0.75,
-  }
+  },
+
+  NORTH: 0,
+  EAST: 1,
+  SOUTH: 2,
+  WEST: 3,
 });
