@@ -8,9 +8,15 @@ define({
   canvasHeightPx: 480,
 
   player: {
-    width: 30,
-    height: 30,
+    width: 32,
+    height: 32,
     speed: 200,
+    collision: {
+      xMin: 8,
+      xMax: 28,
+      yMin: 2,
+      yMax: 26,
+    },
   },
 
   gun: {

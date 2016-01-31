@@ -3,19 +3,34 @@
  */
 
 define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
+  Crafty.sprite(
+    k.player.width,
+    k.player.height,
+    'assets/Sprites/player.png',
+    {
+      'Player1': [0, 0],
+    });
+
   Crafty.c('Player', {
-    required: '2D, Canvas, Fourway, Collision, Color, Center',
+    required: '2D, Canvas, Fourway, Collision, Color, Center, Player1',
     init: function () {
       this.attr({
           w: k.player.width,
           h: k.player.height,
           z: k.layers.player,
         })
-        .color("red")
         .origin("center")
         .fourway(k.player.speed)
-        .collision()
+        .collision(
+          k.player.collision.xMin, k.player.collision.yMin,
+          k.player.collision.xMin, k.player.collision.yMax,
+          k.player.collision.xMax, k.player.collision.yMax,
+          k.player.collision.xMax, k.player.collision.yMin)
         .attach(Crafty.e('Gun'));
+
+        if (k.debug) {
+          this.addComponent('WiredHitBox');
+        }
     },
     events: {
       Moved: function (e) {
@@ -49,7 +64,6 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
             y: k.gun.offsetY,
             z: k.layers.gun,
           })
-          .color("blue")
         );
       this._direction = {x: 0, y: 0};
       this._defaultDirection = new Crafty.math.Vector2D(0, 1);
@@ -90,7 +104,7 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
         })
         .collision()
         .checkHits('ImpassableTile')
-        .color('yellow');
+        .color('green');
       this._travelled = {x: 0, y: 0};
     },
     _originalPosition: Crafty.math.Vector2D(0, 0),
