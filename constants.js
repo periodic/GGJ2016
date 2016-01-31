@@ -8,16 +8,16 @@ define({
   canvasHeightPx: 600,
 
   player: {
-    width: 48,
-    height: 32,
+    width: 96,
+    height: 64,
     speed: 200,
     maxHealth: 100,
     fireRate: 0.5,
     collision: {
-      xMin:13,
-      xMax: 35,
-      yMin: 5,
-      yMax: 27,
+      xMin: 26,
+      xMax: 70,
+      yMin: 10,
+      yMax: 54,
     },
     healthBar: {
       x: 10,
@@ -51,8 +51,8 @@ define({
   },
 
   tile: {
-    width: 32,
-    height: 32,
+    width: 64,
+    height: 64,
   },
 
   room: {
