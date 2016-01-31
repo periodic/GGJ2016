@@ -15,15 +15,15 @@ define(['crafty', 'constants'], function (Crafty, k) {
     k.tile.height * k.room.height,
     'assets/Rooms/rooms-sprite.png',
     {
-      'Deadend1': [0, 0],
-      'Crossing1': [1, 0],
-      'Corner1': [2, 0],
+      'Deadend1': [2, 0],
+      'Crossing1': [0, 0],
+      'Corner1': [1, 0],
       'Hallway1': [0, 1],
       'Junction1': [1, 1],
-      'Crossing2': [2, 1],
-      'Hallway2': [0, 2],
-      'Crossing3': [1, 2],
-      'Deadend2': [2, 2],
+      'Crossing2': [1, 2],
+      'Hallway2': [2, 2],
+      'Crossing3': [0, 2],
+      'Deadend2': [2, 1],
     });
 
 
