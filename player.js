@@ -52,7 +52,7 @@ define(['crafty', 'constants', 'util/center', 'util/health', 'util/health_bar'],
   });
 
   Crafty.c('Gun', {
-    required: '2D, Canvas, Center',
+    required: '2D, Canvas, Center, Delay',
     init: function () {
       this.attr({
           w: k.player.height,
@@ -71,6 +71,8 @@ define(['crafty', 'constants', 'util/center', 'util/health', 'util/health_bar'],
           })
         );
       this._direction = {x: 0, y: 0};
+      this._shotRequested = false;
+      this._isShooting = false;
       this._defaultDirection = new Crafty.math.Vector2D(0, 1);
     },
     events: {
@@ -83,10 +85,23 @@ define(['crafty', 'constants', 'util/center', 'util/health', 'util/health_bar'],
           rotation: angle,
         });
       },
-      Shoot: function (e) {
-        var direction = e.clone().subtract(this.center()).normalize();
-        var velocity = direction.clone().scale(k.bullet.speed);
-        var position = this.center().add(direction.clone().scale(k.gun.width));
+      Shoot: function () {
+        this._shotRequested = true;
+
+        if (!this._isShooting) {
+          this._isShooting = true;
+          this._fireProjectile();
+          this.delay(this._fireProjectile, 1000 * k.player.fireRate, -1);
+        }
+      },
+      StopShoot: function () {
+        this._shotRequested = false;
+      },
+    },
+    _fireProjectile: function () {
+      if (this._isShooting && this._shotRequested) {
+        var velocity = this._direction.clone().scale(k.bullet.speed);
+        var position = this.center().add(this._direction.clone().scale(k.gun.width));
         var bullet = Crafty.e('Bullet')
           .center(position)
           .originalPosition(position)
@@ -94,8 +109,10 @@ define(['crafty', 'constants', 'util/center', 'util/health', 'util/health_bar'],
             vx: velocity.x,
             vy: velocity.y,
           });
-
-      },
+      } else {
+        this.cancelDelay(this._fireProjectile);
+        this._isShooting = false;
+      }
     },
   });
 

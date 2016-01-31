@@ -12,6 +12,7 @@ define({
     height: 32,
     speed: 200,
     maxHealth: 100,
+    fireRate: 0.5,
     collision: {
       xMin: 8,
       xMax: 28,

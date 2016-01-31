@@ -47,6 +47,11 @@ define(['crafty', 'constants', 'player', 'tiles', 'map', 'util/center_text'], fu
           Crafty.trigger("Shoot", new Crafty.math.Vector2D(Crafty.mousePos.x, Crafty.mousePos.y));
         }
       })
+      .bind('MouseUp', function(e) {
+        if (e.mouseButton == Crafty.mouseButtons.LEFT) {
+          Crafty.trigger("StopShoot");
+        }
+      })
       .bind('ViewportScroll', function (e) {
         this.attr({
           x: -Crafty.viewport.x,
