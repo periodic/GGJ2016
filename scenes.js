@@ -1,7 +1,7 @@
 /*
  * Defines the scenes for our game.
  */
-define(['crafty', 'constants', 'player', 'tiles', 'map', 'util/center_text'], function(Crafty, k) {
+define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_text'], function(Crafty, k) {
 
   Crafty.scene('TitleScreen', function () {
     Crafty.background('#000000');
@@ -64,6 +64,10 @@ define(['crafty', 'constants', 'player', 'tiles', 'map', 'util/center_text'], fu
 
     console.log("Adding a map?");
     Crafty.e('Map');
+
+    Crafty.e('Police').center(-100,0);
+    Crafty.e('Brute').center(-80,0);
+    Crafty.e('Female').center(-60,0);
 
     Crafty.viewport.follow(Crafty('Player'), 0, 0);
   });
