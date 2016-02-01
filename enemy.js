@@ -206,7 +206,7 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
     },
     events: {
       PlayerInRange: function () {
-        this.attackPlayer();
+        this._attackPlayer();
         this.startShooting();
         this.delay(this._attackPlayer, 100, -1);
       },
