@@ -51,7 +51,7 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
         });
         console.log("Enemies present? ", enemiesPresent);
         if (!enemiesPresent) {
-          Crafty.scene('Victory');
+          Crafty.trigger('LevelComplete');
         }
         this.delay(this.resetHitChecks, 200);
       },

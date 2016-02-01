@@ -26,13 +26,26 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
   };
 
   Crafty.c('AdvanceOnKeypress', {
-    required: 'Keyboard',
+    required: '2D, Keyboard',
     _nextScene: undefined,
     nextScene: function (scene) {
       this._nextScene = scene;
     },
     events: {
       KeyDown: function () {
+        Crafty.scene(this._nextScene);
+      },
+    },
+  });
+
+  Crafty.c('AdvanceOnLevelComplete', {
+    required: '2D',
+    _nextScene: undefined,
+    nextScene: function (scene) {
+      this._nextScene = scene;
+    },
+    events: {
+      LevelComplete: function () {
         Crafty.scene(this._nextScene);
       },
     },
@@ -92,6 +105,8 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
     Crafty.e('Map');
 
     Crafty.viewport.follow(Crafty('Player'), 0, 0);
+
+    Crafty.e('AdvanceOnLevelComplete').nextScene('Victory');
   });
 
   Crafty.scene('Death', function () {
