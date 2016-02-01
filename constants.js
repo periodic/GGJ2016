@@ -2,7 +2,7 @@
  * Global constants and stuff that define how the game works.
  */
 define({
-  debug: true,
+  debug: false,
 
   canvasWidthPx: 800,
   canvasHeightPx: 600,
@@ -48,7 +48,7 @@ define({
     brute: {
       maxHealth: 200,
       speed: 150,
-      meleeDamage: 1,
+      meleeDamage: 20,
       knockbackDistance: 2 * 64, // 2 tiles.
     },
     female: {
