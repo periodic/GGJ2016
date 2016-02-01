@@ -67,9 +67,10 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
     Crafty.background('#000000');
 
     writeText([
-      ['You have been summoned.', 36, true],
-      ['But they made a mistake and want to banish you.', 36, true],
+      ['You have been summoned into this world.', 36, true],
+      ['But the forces of order wish to banish you.', 36, true],
       ['Click to defend yourself.', 24, false],
+      ['Find and destroy the ritual.', 24, false],
       ['Don\'t let your health run out.', 24, false],
       ]);
 
@@ -138,7 +139,7 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
     Crafty.background('#000000');
 
      writeText([
-          ['You have escaped those who would enslave you.', 36, false],
+          ['You have defeated those who would banish you.', 36, false],
           ['The world is yours to feast upon.', 36, false],
           ['Created by: Andrew Haven, Brian Torrence, Lindsay Haven, and Zoe Patrick.', 24, false],
       ]);
