@@ -3,29 +3,39 @@
  */
 define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_text'], function(Crafty, k) {
 
+  function writeText(lines) {
+    var y = Crafty.viewport.height / 2 - 50 * lines.length;
+    lines.forEach(function (line) {
+      var text = line[0];
+      var size = line[1] || 36;
+      var weight = line[2] || true;
+
+      var graphic = Crafty.e('CenterText')
+        .textColor("#ffffff")
+        .textFont({size: size + 'px', align: 'center'})
+        .text(text)
+        .centerHorizontal()
+        .attr({
+          y: y,
+        });
+      if (weight) {
+        graphic.textFont({weight: 'bold'});
+      }
+      y += 100;
+    });
+  };
+
   Crafty.scene('TitleScreen', function () {
     Crafty.background('#000000');
+
+    writeText([
+      ['Global Game Jam 2016', 36, true],
+      ['Press any key to begin', 24, false],
+      ]);
 
     var listener = Crafty.e('2D, Keyboard')
       .bind('KeyDown', function () {
         Crafty.scene('Level');
-      });
-
-    var title = Crafty.e('CenterText')
-      .textFont({weight: 'bold', size: '36px', align: 'center'})
-      .textColor("#ffffff")
-      .text('Global Game Jam 2016')
-      .centerHorizontal()
-      .attr({
-        y: 100,
-      });
-    var instructions = Crafty.e('CenterText')
-      .textFont({size: '20px', align: 'center'})
-      .textColor("#ffffff")
-      .text('Press any key to begin')
-      .centerHorizontal()
-      .attr({
-        y: 400,
       });
   });
 
@@ -77,23 +87,10 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
   Crafty.scene('Death', function () {
     Crafty.background('#000000');
 
-    Crafty.e('CenterText')
-      .textFont({weight: 'bold', size: '36px', align: 'center'})
-      .textColor("#ffffff")
-      .text('The monster has been slain.')
-      .centerHorizontal()
-      .attr({
-        y: Crafty.viewport.height / 2,
-      });
-
-    Crafty.e('CenterText')
-      .textFont({size: '24px', align: 'center'})
-      .textColor("#ffffff")
-      .text('Press any key to try again.')
-      .centerHorizontal()
-      .attr({
-        y: Crafty.viewport.height / 2 + 100,
-      });
+    writeText([
+      ['You have been slain.', 36, true],
+      ['Press any key to start again', 24, false],
+      ]);
 
     var listener = Crafty.e('2D, Keyboard')
       .bind('KeyDown', function () {
