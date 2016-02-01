@@ -10,7 +10,7 @@ define({
   player: {
     width: 96,
     height: 64,
-    speed: 200,
+    speed: 250,
     maxHealth: 100,
     collision: {
       xMin: 26,
@@ -36,11 +36,11 @@ define({
     meanderSpeed: 30,
     meanderDirectionChangeChance: 0.1,
     police: {
-      maxHealth: 150,
-      speed: 100,
+      maxHealth: 40,
+      speed: 110,
       fireRate: 1,
       bulletSpeed: 300,
-      bulletDamage: 10,
+      bulletDamage: 25,
       preferredDistance: 300,
     },
     brute: {
