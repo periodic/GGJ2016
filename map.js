@@ -4,7 +4,7 @@
 define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles', 'enemy'], function(Crafty, k, map, roomData) {
 
   var DIRECTIONS = [k.NORTH, k.EAST, k.SOUTH, k.WEST];
-  var ENEMY_TYPES = ['Brute'];//['Police', 'Brute', 'Female'];
+  var ENEMY_TYPES = ['Police', 'Brute', 'Female'];
 
   Crafty.c('Map', {
     init: function () {
