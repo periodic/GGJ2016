@@ -11,22 +11,10 @@ define(['crafty', 'constants'], function (Crafty, k) {
         z: k.layers.ui,
       })
     },
-    track: function (entity) {
-      this._trackedEntity = entity;
-      return this;
+    percent: function (percent) {
+      this.w = k.player.healthBar.w * percent;
     },
-    _trackedEntity: undefined,
     events: {
-      HealthChanged: function (obj) {
-        if (obj[0] === this._trackedEntity[0]) {
-          this.w = k.player.healthBar.w * obj.currentHealth() / obj.maxHealth();
-        }
-      },
-      MaxHealthChanged: function (obj) {
-        if (obj[0] === this._trackedEntity[0]) {
-          this.w = k.player.healthBar.w * obj.currentHealth() / obj.maxHealth();
-        }
-      },
       ViewportScroll: function () {
         this.attr({
           x: k.player.healthBar.x - Crafty.viewport.x,

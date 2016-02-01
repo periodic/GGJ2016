@@ -34,7 +34,8 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
         })
         .fireRate(k.player.fireRate)
         .bulletDamage(k.player.bulletDamage)
-        .bulletSpeed(k.player.bulletSpeed);
+        .bulletSpeed(k.player.bulletSpeed)
+        .additionalTargets(['Enemy']);
 
       this.attach(this._gun);
 
@@ -42,8 +43,7 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
         this.addComponent('WiredHitBox');
       }
 
-      Crafty.e("HealthBar")
-        .track(this)
+      this._healthBar = Crafty.e("HealthBar")
         .color(k.player.healthBar.color);
     },
     events: {
@@ -67,6 +67,16 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
       },
       StopShoot: function () {
         this._gun.stopShooting();
+      },
+      HealthChanged: function (obj) {
+        this._healthBar.percent(this.currentHealth() / this.maxHealth());
+        if (this.currentHealth() <= 0) {
+          Crafty.pause();
+          console.log("Death time!");
+        }
+      },
+      MaxHealthChanged: function (obj) {
+        this._healthBar.percent(this.currentHealth() / this.maxHealth());
       },
     },
   });

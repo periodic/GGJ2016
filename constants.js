@@ -30,6 +30,32 @@ define({
     bulletDamage: 30,
   },
 
+  enemy: {
+    aiUpdateRate: 500,
+    aiResponseDistance: 64 * 19, // size of a room.
+    meanderSpeed: 30,
+    meanderDirectionChangeChance: 0.1,
+    police: {
+      maxHealth: 150,
+      speed: 100,
+      fireRate: 1,
+      bulletSpeed: 300,
+      bulletDamage: 10,
+      preferredDistance: 300,
+    },
+    brute: {
+      maxHealth: 200,
+      speed: 150,
+    },
+    female: {
+      maxHealth: 80,
+      speed: 120,
+      fireRate: 1,
+      bulletSpeed: 400,
+      bulletDamage: 15,
+    },
+  },
+
   gun: {
     offset: 60,
   },

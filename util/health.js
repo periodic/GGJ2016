@@ -13,26 +13,24 @@ define(['crafty'], function (Crafty) {
     },
     damage: function (damage) {
       this._currentHealth = this._clampHealth(this._currentHealth - damage);
-      Crafty.trigger('HealthChanged', this);
+      this.trigger('HealthChanged', this);
       return this;
     },
     currentHealth: function (currentHealth) {
       if (currentHealth) {
         this._currentHealth = this._clampHealth(currentHealth);
-        Crafty.trigger('HealthChanged', this);
+        this.trigger('HealthChanged', this);
         return this;
-      } else {
-        return this._currentHealth;
       }
+      return this._currentHealth;
     },
     maxHealth: function (maxHealth) {
       if (maxHealth) {
         this._maxHealth = maxHealth;
         Crafty.trigger('MaxHealthChanged', this);
         return this;
-      } else {
-        return this._maxHealth;
       }
+      return this._maxHealth;
     },
     _clampHealth: function (health) {
       return Math.min(this._maxHealth, Math.max(0, health));

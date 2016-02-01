@@ -12,6 +12,7 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
     _isShooting: false,
     _bulletSpeed: 100,
     _bulletDamage: 1,
+    _additionalTargets: [],
     init: function () {
     },
     fireRate: function (fireRate) {
@@ -42,6 +43,13 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
       }
       return this._direction;
     },
+    additionalTargets: function (additionalTargets) {
+      if (additionalTargets) {
+        this._additionalTargets = additionalTargets;
+        return this;
+      }
+      return this._additionalTargets;
+    },
     startShooting: function () {
       this._shotRequested = true;
 
@@ -64,7 +72,10 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
           .attr({
             vx: velocity.x,
             vy: velocity.y,
-          })
+          });
+        this._additionalTargets.forEach(function (targetType) {
+          bullet.checkHits(targetType);
+        });
       } else {
         this.cancelDelay(this._fireProjectile);
         this._isShooting = false;
@@ -108,7 +119,7 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
           if (hit.obj.damage) {
             hit.obj.damage(this._damage);
           }
-        });
+        }, this);
 
         this.destroy();
       },
