@@ -113,7 +113,7 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
         .attr({
           w: 10,
           h: 10,
-          z: k.layers.gun,
+          z: k.layers.ui,
         })
         .color("blue");
     },

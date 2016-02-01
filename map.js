@@ -1,7 +1,16 @@
 /*
  * Builds the map and renders it.
  */
-define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles', 'enemy'], function(Crafty, k, map, roomData) {
+define([
+  'crafty',
+  'constants',
+  'map_generator',
+  'data/roomdata',
+  'tiles',
+  'enemy',
+  'util/center',
+  'circle',
+  ], function(Crafty, k, map, roomData) {
 
   var DIRECTIONS = [k.NORTH, k.EAST, k.SOUTH, k.WEST];
   var ENEMY_TYPES = ['Police', 'Brute', 'Female'];
@@ -29,8 +38,18 @@ define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles', 'enemy
 
             var room = Crafty.e('Room').room(directions);
 
-            if (!(r == k.map.originR && c == k.map.originC)
-                && !(r == k.map.exitR && c == k.map.exitC)) {
+            if ((r == k.map.originR && c == k.map.originC)) {
+              room.attach(Crafty.e('StartingCircle').center(room.center()));
+            } else if (r == k.map.exitR && c == k.map.exitC) {
+              room.attach(Crafty.e('EndingCircle').center(room.center()));
+
+              var offset = new Crafty.math.Vector2D(0, 150);
+              var rotationMatrix = (new Crafty.math.Matrix2D()).rotate(2 * Math.PI / 7);
+              for (var i = 0; i < 7; i++) {
+                room.attach(Crafty.e('Female').center(room.center().add(offset)));
+                rotationMatrix.apply(offset);
+              }
+            } else {
               for (var i = 0; i < k.enemy.perRoom; i++) {
                 room.addEnemy();
               }
@@ -46,7 +65,7 @@ define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles', 'enemy
   });
 
   Crafty.c('Room', {
-    required: '2D, Canvas, DebugRectangle',
+    required: '2D, Canvas, DebugRectangle, Center',
     _template: undefined,
     init: function () {
       this.attr({

@@ -56,7 +56,7 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
       if (!this._isShooting) {
         this._isShooting = true;
         this._fireProjectile();
-        this.delay(this._fireProjectile, 1000 * k.player.fireRate, -1);
+        this.delay(this._fireProjectile, 1000 / this._fireRate, -1);
       }
     },
     stopShooting: function () {

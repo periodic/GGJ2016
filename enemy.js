@@ -90,10 +90,10 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
         .fireRate(k.enemy.police.fireRate)
         .additionalTargets(['Player'])
         .collision([ // Slightly taller than a tile.
-          0, 4,
-          0, 64,
-          34, 64,
-          34, 4,
+          0, 10,
+          0, 68,
+          34, 68,
+          34, 10,
         ]);
     },
     events: {
@@ -137,7 +137,12 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
         })
         .health(k.enemy.brute.maxHealth)
         .checkHits('Player')
-        .collision();
+        .collision([
+          0, 10,
+          0, 64,
+          38, 64,
+          38, 10,
+        ]);
     },
     events: {
       PlayerInRange: function () {

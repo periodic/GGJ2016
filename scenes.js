@@ -58,6 +58,12 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
           y: -Crafty.viewport.y,
         });
       })
+      .bind('ViewportResize', function (e) {
+        this.attr({
+          w: Crafty.viewport.width,
+          h: Crafty.viewport.height,
+        });
+      })
       .bind('MouseMove', function(e) {
         Crafty.trigger("TargetMoved", e);
       });
@@ -93,7 +99,28 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
       .bind('KeyDown', function () {
         Crafty.scene('Level');
       });
+  });
 
+  Crafty.scene('Victory', function () {
+    Crafty.background('#000000');
+
+    Crafty.e('CenterText')
+      .textFont({weight: 'bold', size: '36px', align: 'center'})
+      .textColor("#ffffff")
+      .text('You have escaped those who would enslave you.')
+      .centerHorizontal()
+      .attr({
+        y: Crafty.viewport.height / 2,
+      });
+
+    Crafty.e('CenterText')
+      .textFont({weight: 'bold', size: '36px', align: 'center'})
+      .textColor("#ffffff")
+      .text('The world is yours to feast upon.')
+      .centerHorizontal()
+      .attr({
+        y: Crafty.viewport.height / 2 + 100,
+      });
   });
 });
 

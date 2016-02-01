@@ -10,7 +10,7 @@ define({
   player: {
     width: 106,
     height: 64,
-    speed: 250,
+    speed: 300,
     maxHealth: 100,
     knockbackDuration: 300,
     collision: {
@@ -26,13 +26,13 @@ define({
       h: 20,
       color: 'green',
     },
-    fireRate: 0.5,
+    fireRate: 4,
     bulletSpeed: 600,
     bulletDamage: 30,
   },
 
   enemy: {
-    aiUpdateRate: 500,
+    aiUpdateRate: 1000,
     aiResponseDistance: 64 * 19, // size of a room.
     meanderSpeed: 30,
     meanderDirectionChangeChance: 0.1,
@@ -66,9 +66,9 @@ define({
 
   layers: {
     background: 1,
-    obstacles: 2,
-    enemies: 3,
-    gun: 4,
+    decals: 2,
+    obstacles: 3,
+    enemies: 4,
     player: 5,
     bullets: 6,
     ui: 7,
