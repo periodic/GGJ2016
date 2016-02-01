@@ -35,6 +35,7 @@ define({
     aiResponseDistance: 64 * 19, // size of a room.
     meanderSpeed: 30,
     meanderDirectionChangeChance: 0.1,
+    perRoom: 2,
     police: {
       maxHealth: 40,
       speed: 110,

@@ -73,8 +73,8 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
       HealthChanged: function (obj) {
         this._healthBar.percent(this.currentHealth() / this.maxHealth());
         if (this.currentHealth() <= 0) {
-          Crafty.pause();
-          console.log("Death time!");
+          console.log("You died.");
+          Crafty.scene('Death');
         }
       },
       MaxHealthChanged: function (obj) {

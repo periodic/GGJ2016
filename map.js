@@ -1,9 +1,10 @@
 /*
  * Builds the map and renders it.
  */
-define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles'], function(Crafty, k, map, roomData) {
+define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles', 'enemy'], function(Crafty, k, map, roomData) {
 
   var DIRECTIONS = [k.NORTH, k.EAST, k.SOUTH, k.WEST];
+  var ENEMY_TYPES = ['Police', 'Brute', 'Female'];
 
   Crafty.c('Map', {
     init: function () {
@@ -22,11 +23,19 @@ define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles'], funct
       var baseOffsetY = - roomHeight / 2;
 
       rooms.forEach(function (row, r) {
-        row.forEach(function (room, c) {
-          if (room) {
-            if (typeof(room) !== "object") debugger;
+        row.forEach(function (directions, c) {
+          if (directions) {
+            if (typeof(directions) !== "object") debugger;
 
-            Crafty.e('Room').room(room).attr({
+            var room = Crafty.e('Room').room(directions);
+
+            if (!(r == k.map.originR && c == k.map.originC)
+                && !(r == k.map.exitR && c == k.map.exitC)) {
+              for (var i = 0; i < k.enemy.perRoom; i++) {
+                room.addEnemy();
+              }
+            }
+            room.attr({
               x: c * roomWidth + baseOffsetX,
               y: r * roomHeight + baseOffsetY,
             });
@@ -38,6 +47,7 @@ define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles'], funct
 
   Crafty.c('Room', {
     required: '2D, Canvas, DebugRectangle',
+    _template: undefined,
     init: function () {
       this.attr({
           w: k.tile.height * k.room.width,
@@ -59,14 +69,13 @@ define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles'], funct
       var turns = this._canFitToTemplate(template.exits, directions);
 
       this.addComponent(template.sprite);
-      this.rotation = turns * 90;
 
       for (var r = 0; r < k.room.height; r++) {
         for (var c = 0; c < k.room.width; c++) {
           var x = c * k.tile.width;
           var y = r * k.tile.height;
 
-          var tileSymbol = this._getTile(r, c, turns, template);
+          var tileSymbol = template.room[r][c];
 
           if (tileSymbol === 'X' || tileSymbol === undefined) {
             this.attach(
@@ -75,17 +84,36 @@ define(['crafty', 'constants', 'map_generator', 'data/roomdata', 'tiles'], funct
                 y: y,
                 z: k.layers.obstacles,
               }));
-          }/*  else {
-            this.attach(
-              Crafty.e('Floor').attr({
-                x: x,
-                y: y,
-              }));
-            } */
+          }
         }
       }
 
+      this.rotation = turns * 90;
+
+      this._template = template;
+      this._turns = turns;
+
       return this;
+    },
+
+    addEnemy: function () {
+      var enemyType = ENEMY_TYPES[Math.floor(Math.random() * ENEMY_TYPES.length)];
+
+      var searching = true;
+      while (searching) {
+        var r = Math.floor(Math.random() * k.room.height);
+        var c = Math.floor(Math.random() * k.room.width);
+
+        if (this._getTile(r, c, this._turns, this._template) === " ") {
+          var enemy = Crafty.e(enemyType);
+          enemy.attr({
+              x: c * k.tile.width,
+              y: (r + 1) * k.tile.height - enemy.h,
+            });
+          this.attach(enemy);
+          searching = false;
+        }
+      }
     },
 
     _getTile: function (r, c, turns, template) {

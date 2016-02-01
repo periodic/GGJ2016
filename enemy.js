@@ -29,7 +29,6 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
     },
     events: {
       HealthChanged: function () {
-        console.log("entity hit.  Health is now ", this.currentHealth());
         if (this.currentHealth() <= 0) {
           this.destroy();
           console.log("Died!");
@@ -64,7 +63,6 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
           this._playerInRange = false;
         }
 
-        console.log("Just meander...");
         this._meander();
       }
     },
@@ -91,7 +89,12 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
         .bulletSpeed(k.enemy.police.bulletSpeed)
         .fireRate(k.enemy.police.fireRate)
         .additionalTargets(['Player'])
-        .collision();
+        .collision([ // Slightly taller than a tile.
+          0, 4,
+          0, 64,
+          34, 64,
+          34, 4,
+        ]);
     },
     events: {
       PlayerInRange: function () {
@@ -158,14 +161,35 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
   });
 
   Crafty.c("Female", {
-    required: 'Enemy, FemaleSprite',
+    required: 'Enemy, FemaleSprite, Gun',
     init: function () {
       this.attr({
           w: 24,
           h: 60,
         })
         .health(k.enemy.female.maxHealth)
+        .bulletDamage(k.enemy.female.bulletDamage)
+        .bulletSpeed(k.enemy.female.bulletSpeed)
+        .fireRate(k.enemy.female.fireRate)
+        .additionalTargets(['Player'])
         .collision();
     },
+    events: {
+      PlayerInRange: function () {
+        this.delay(this._attackPlayer, 100, -1);
+        this.startShooting();
+      },
+      PlayerOutOfRange: function () {
+        this.cancelDelay(this._attackPlayer);
+        this.stopShooting();
+      },
+    },
+    _attackPlayer: function () {
+      var player = Crafty('Player');
+      var difference = player.center().subtract(this.center());
+      var direction = difference.clone().normalize();
+
+      this.direction(direction);
+    }
   });
 });

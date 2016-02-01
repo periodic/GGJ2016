@@ -67,5 +67,33 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
 
     Crafty.viewport.follow(Crafty('Player'), 0, 0);
   });
+
+  Crafty.scene('Death', function () {
+    Crafty.background('#000000');
+
+    Crafty.e('CenterText')
+      .textFont({weight: 'bold', size: '36px', align: 'center'})
+      .textColor("#ffffff")
+      .text('The monster has been slain.')
+      .centerHorizontal()
+      .attr({
+        y: Crafty.viewport.height / 2,
+      });
+
+    Crafty.e('CenterText')
+      .textFont({size: '24px', align: 'center'})
+      .textColor("#ffffff")
+      .text('Press any key to try again.')
+      .centerHorizontal()
+      .attr({
+        y: Crafty.viewport.height / 2 + 100,
+      });
+
+    var listener = Crafty.e('2D, Keyboard')
+      .bind('KeyDown', function () {
+        Crafty.scene('Level');
+      });
+
+  });
 });
 
