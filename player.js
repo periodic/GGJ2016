@@ -11,6 +11,8 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
       'Player1': [0, 0],
     });
 
+  Crafty.sprite('assets/Sprites/playerbullet.png', {PlayerBulletSprite: [0, 0, 18, 18]})
+
   Crafty.c('Player', {
     required: '2D, Canvas, Fourway, Collision, Color, Center, Player1, Health, SpriteAnimation, Delay',
     init: function () {
@@ -32,6 +34,8 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
           w: this._w,
           h: this._h,
         })
+        .sprite('PlayerBulletSprite')
+        .bulletSize(18, 18)
         .fireRate(k.player.fireRate)
         .bulletDamage(k.player.bulletDamage)
         .bulletSpeed(k.player.bulletSpeed)

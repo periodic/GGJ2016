@@ -11,6 +11,8 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
       'FemaleSprite': [2, 0],
     });
 
+  Crafty.sprite('assets/Sprites/enemybullet.png', {EnemyBulletSprite: [0, 0, 6, 10]})
+
   var MEANDER_DIRECTIONS = [
     new Crafty.math.Vector2D(0,  1),
     new Crafty.math.Vector2D(1,  0),
@@ -95,6 +97,8 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
         .bulletSpeed(k.enemy.police.bulletSpeed)
         .fireRate(k.enemy.police.fireRate)
         .additionalTargets(['Player'])
+        .sprite('EnemyBulletSprite')
+        .bulletSize(6, 10)
         .collision([ // Slightly taller than a tile.
           0, 10,
           0, 68,
@@ -104,8 +108,9 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
     },
     events: {
       PlayerInRange: function () {
-        this.delay(this._attackPlayer, 100, -1);
+        this._attackPlayer();
         this.startShooting();
+        this.delay(this._attackPlayer, 100, -1);
       },
       PlayerOutOfRange: function () {
         this.cancelDelay(this._attackPlayer);
@@ -194,13 +199,16 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
         .bulletDamage(k.enemy.female.bulletDamage)
         .bulletSpeed(k.enemy.female.bulletSpeed)
         .fireRate(k.enemy.female.fireRate)
+        .sprite('EnemyBulletSprite')
+        .bulletSize(6, 10)
         .additionalTargets(['Player'])
         .collision();
     },
     events: {
       PlayerInRange: function () {
-        this.delay(this._attackPlayer, 100, -1);
+        this.attackPlayer();
         this.startShooting();
+        this.delay(this._attackPlayer, 100, -1);
       },
       PlayerOutOfRange: function () {
         this.cancelDelay(this._attackPlayer);

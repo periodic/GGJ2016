@@ -50,6 +50,15 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
       }
       return this._additionalTargets;
     },
+    sprite: function (sprite) {
+      this._sprite = sprite;
+      return this;
+    },
+    bulletSize: function(w, h) {
+      this._bulletW = w;
+      this._bulletH = h;
+      return this;
+    },
     startShooting: function () {
       this._shotRequested = true;
 
@@ -69,7 +78,11 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
         var bullet = Crafty.e('Bullet')
           .center(position)
           .damage(this._bulletDamage)
+          .sprite(this._sprite)
+          .direction(velocity)
           .attr({
+            w: this._bulletW,
+            h: this._bulletH,
             vx: velocity.x,
             vy: velocity.y,
           });
@@ -84,8 +97,9 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
   });
 
   Crafty.c('Bullet', {
-    required: '2D, Canvas, Color, Collision, Motion, Center',
+    required: '2D, Canvas, Collision, Motion, Center',
     _originalPosition: undefined,
+    _defaultDirection: new Crafty.math.Vector2D(0, 1),
     _damage: 0,
     init: function () {
       this.attr({
@@ -93,9 +107,13 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
           h: 5,
           z: k.layers.bullets,
         })
+        .origin('center')
         .collision()
-        .checkHits('ImpassableTile')
-        .color('green');
+        .checkHits('ImpassableTile');
+    },
+    sprite: function (sprite) {
+      this.addComponent(sprite);
+      return this;
     },
     damage: function (damage) {
       if (damage) {
@@ -103,6 +121,10 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
         return this;
       }
       return this._damage;
+    },
+    direction: function (vector) {
+      this.rotation = this._defaultDirection.angleTo(vector) * 180 / Math.PI + 90;
+      return this;
     },
     events: {
       Moved: function (e) {
