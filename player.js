@@ -12,7 +12,7 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
     });
 
   Crafty.c('Player', {
-    required: '2D, Canvas, Fourway, Collision, Color, Center, Player1, Health',
+    required: '2D, Canvas, Fourway, Collision, Color, Center, Player1, Health, SpriteAnimation',
     init: function () {
       this.attr({
           w: k.player.width,
@@ -36,8 +36,10 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
         .bulletDamage(k.player.bulletDamage)
         .bulletSpeed(k.player.bulletSpeed)
         .additionalTargets(['Enemy']);
-
       this.attach(this._gun);
+
+      this.reel('Walking', 1200, [[0,0], [1,0], [2,0], [3,0], [2,0], [1,0]]);
+      this.animate('Walking', -1);
 
       if (k.debug) {
         this.addComponent('WiredHitBox');

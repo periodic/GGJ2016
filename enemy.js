@@ -133,7 +133,27 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
           h: 64,
         })
         .health(k.enemy.brute.maxHealth)
+        .checkHits('Player')
         .collision();
+    },
+    events: {
+      PlayerInRange: function () {
+        this.delay(this._attackPlayer, 100, -1);
+      },
+      PlayerOutOfRange: function () {
+        this.cancelDelay(this._attackPlayer);
+      },
+    },
+    _attackPlayer: function () {
+      var player = Crafty('Player');
+      var difference = player.center().subtract(this.center());
+      var direction = difference.clone().normalize();
+
+      var movement = direction.clone().scale(k.enemy.police.speed);
+      this.attr({
+        vx: movement.x,
+        vy: movement.y,
+      });
     },
   });
 

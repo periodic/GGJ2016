@@ -65,10 +65,6 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
     console.log("Adding a map?");
     Crafty.e('Map');
 
-    Crafty.e('Police').center(-200,0);
-    Crafty.e('Brute').center(-160,0);
-    Crafty.e('Female').center(-120,0);
-
     Crafty.viewport.follow(Crafty('Player'), 0, 0);
   });
 });
