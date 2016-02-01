@@ -105,17 +105,18 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
     },
   });
 
+  Crafty.sprite('assets/Sprites/reticle.png', {ReticleSprite: [0,0,28, 28]})
+
   Crafty.c('Reticle', {
     _offsetX: 0,
     _offsetY: 0,
     init: function () {
-      this.requires('2D, Canvas, Color, Center')
+      this.requires('2D, Canvas, ReticleSprite, Center')
         .attr({
-          w: 10,
-          h: 10,
+          w: 28,
+          h: 28,
           z: k.layers.ui,
-        })
-        .color("blue");
+        });
     },
     events: {
       TargetMoved: function (e) {
