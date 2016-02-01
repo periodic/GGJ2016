@@ -89,13 +89,13 @@ define({
   },
 
   map: {
-    rows: 4,
-    columns: 4,
+    rows: 1,
+    columns: 3,
     originR: 0,
     originC: 0,
-    exitR: 3,
-    exitC: 3,
-    connectedness: 0.2,
+    exitR: 0,
+    exitC: 2,
+    connectedness: 1.0,
   },
 
   NORTH: 0,

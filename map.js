@@ -65,7 +65,7 @@ define([
   });
 
   Crafty.c('Room', {
-    required: '2D, Canvas, DebugRectangle, Center',
+    required: '2D, Canvas, DebugRectangle, Center, Collision',
     _template: undefined,
     init: function () {
       this.attr({
@@ -75,12 +75,15 @@ define([
           y: 0,
           z: k.layers.background,
         })
-        .origin('center');
+        .origin('center')
+        .collision()
+        .checkHits('Player');
       if (k.debug) {
         this.debugStroke("green")
           .debugRectangle(this);
       }
     },
+
     room: function (directions) {
       var template = this._chooseTemplate(directions);
 
@@ -133,6 +136,25 @@ define([
           searching = false;
         }
       }
+    },
+
+    events: {
+      HitOn: function (hitData) {
+        // Player has entered, turn on AI.
+        Crafty.map.search(this, true).forEach(function (entity) {
+          if (entity.has('Enemy')) {
+            entity.activate();
+          }
+        });
+      },
+      HitOff: function () {
+        // Player has left, turn of AI.
+        Crafty.map.search(this, true).forEach(function (entity) {
+          if (entity.has('Enemy')) {
+            entity.deactivate();
+          }
+        });
+      },
     },
 
     _getTile: function (r, c, turns, template) {

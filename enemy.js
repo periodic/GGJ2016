@@ -25,7 +25,12 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
         z: k.layers.enemies,
       });
 
-      this.delay(this._updateAI, k.enemy.aiUpdateRate, -1);
+    },
+    activate: function () {
+      this.trigger("PlayerInRange");
+    },
+    deactivate: function () {
+      this.trigger("PlayerOutOfRange");
     },
     events: {
       HealthChanged: function () {
@@ -63,7 +68,8 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
           this._playerInRange = false;
         }
 
-        this._meander();
+        // Uncomment to enable idle meandering.
+        // this._meander();
       }
     },
     _meander: function () {
