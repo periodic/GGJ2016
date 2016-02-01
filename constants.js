@@ -39,7 +39,7 @@ define({
     perRoom: 2,
     police: {
       maxHealth: 40,
-      speed: 110,
+      speed: 120,
       fireRate: 1,
       bulletSpeed: 300,
       bulletDamage: 25,
@@ -47,8 +47,8 @@ define({
     },
     brute: {
       maxHealth: 200,
-      speed: 150,
-      meleeDamage: 20,
+      speed: 220,
+      meleeDamage: 40,
       knockbackDistance: 2 * 64, // 2 tiles.
     },
     female: {
