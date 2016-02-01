@@ -12,6 +12,7 @@ define({
     height: 64,
     speed: 250,
     maxHealth: 100,
+    knockbackDuration: 300,
     collision: {
       xMin: 26,
       xMax: 80,
@@ -47,6 +48,8 @@ define({
     brute: {
       maxHealth: 200,
       speed: 150,
+      meleeDamage: 1,
+      knockbackDistance: 2 * 64, // 2 tiles.
     },
     female: {
       maxHealth: 80,

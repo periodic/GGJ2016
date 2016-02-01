@@ -12,7 +12,7 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
     });
 
   Crafty.c('Player', {
-    required: '2D, Canvas, Fourway, Collision, Color, Center, Player1, Health, SpriteAnimation',
+    required: '2D, Canvas, Fourway, Collision, Color, Center, Player1, Health, SpriteAnimation, Delay',
     init: function () {
       this.attr({
           w: k.player.width,
@@ -47,6 +47,28 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
 
       this._healthBar = Crafty.e("HealthBar")
         .color(k.player.healthBar.color);
+    },
+    push: function (direction, distance) {
+      var velocity = (new Crafty.math.Vector2D(- direction.x, - direction.y))
+          .normalize()
+          .scale(1000 * distance / k.player.knockbackDuration);
+
+      console.log("Knockback", velocity);
+
+      this.disableControl();
+      this.attr({
+        vx: velocity.x,
+        vy: velocity.y,
+      });
+      this.cancelDelay(this.endPush);
+      this.delay(this.endPush, k.player.knockbackDuration);
+    },
+    endPush: function () {
+      this.attr({
+        vx: 0,
+        vy: 0,
+      });
+      this.enableControl();
     },
     events: {
       Moved: function (e) {

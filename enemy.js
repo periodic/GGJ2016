@@ -129,7 +129,7 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
   });
 
   Crafty.c("Brute", {
-    required: 'Enemy, BruteSprite',
+    required: 'Enemy, BruteSprite, Delay',
     init: function () {
       this.attr({
           w: 38,
@@ -145,6 +145,18 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
       },
       PlayerOutOfRange: function () {
         this.cancelDelay(this._attackPlayer);
+      },
+      HitOn: function (hitData) {
+        // should only trigger on player hits.
+        console.log(hitData);
+
+        var player = hitData[0].obj;
+        player.damage(k.enemy.brute.meleeDamage);
+
+        player.push(hitData[0].normal, k.enemy.brute.knockbackDistance);
+
+        this.cancelDelay(this.resetHitChecks);
+        this.delay(this.resetHitChecks, 500);
       },
     },
     _attackPlayer: function () {
