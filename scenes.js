@@ -25,6 +25,19 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
     });
   };
 
+  Crafty.c('AdvanceOnKeypress', {
+    required: 'Keyboard',
+    _nextScene: undefined,
+    nextScene: function (scene) {
+      this._nextScene = scene;
+    },
+    events: {
+      KeyDown: function () {
+        Crafty.scene(this._nextScene);
+      },
+    },
+  });
+
   Crafty.scene('TitleScreen', function () {
     Crafty.background('#000000');
 
@@ -33,10 +46,7 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
       ['Press any key to begin', 24, false],
       ]);
 
-    var listener = Crafty.e('2D, Keyboard')
-      .bind('KeyDown', function () {
-        Crafty.scene('Level');
-      });
+    Crafty.e('AdvanceOnKeypress').nextScene('Level');
   });
 
 
@@ -92,10 +102,7 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
       ['Press any key to start again', 24, false],
       ]);
 
-    var listener = Crafty.e('2D, Keyboard')
-      .bind('KeyDown', function () {
-        Crafty.scene('Level');
-      });
+    Crafty.e('AdvanceOnKeypress').nextScene('Level');
   });
 
   Crafty.scene('Victory', function () {
