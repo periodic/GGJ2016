@@ -59,6 +59,20 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
       ['Press any key to begin', 24, false],
       ]);
 
+    Crafty.e('AdvanceOnKeypress').nextScene('IntroScreen');
+  });
+
+
+  Crafty.scene('IntroScreen', function () {
+    Crafty.background('#000000');
+
+    writeText([
+      ['You have been summoned.', 36, true],
+      ['But they made a mistake and want to banish you.', 36, true],
+      ['Click to defend yourself.', 24, false],
+      ['Don\'t let your health run out.', 24, false],
+      ]);
+
     Crafty.e('AdvanceOnKeypress').nextScene('Level');
   });
 
@@ -123,23 +137,13 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
   Crafty.scene('Victory', function () {
     Crafty.background('#000000');
 
-    Crafty.e('CenterText')
-      .textFont({weight: 'bold', size: '36px', align: 'center'})
-      .textColor("#ffffff")
-      .text('You have escaped those who would enslave you.')
-      .centerHorizontal()
-      .attr({
-        y: Crafty.viewport.height / 2,
-      });
+     writeText([
+          ['You have escaped those who would enslave you.', 36, false],
+          ['The world is yours to feast upon.', 36, false],
+          ['Created by: Andrew Haven, Brian Torrence, Lindsay Haven, and Zoe Patrick.', 24, false],
+      ]);
 
-    Crafty.e('CenterText')
-      .textFont({weight: 'bold', size: '36px', align: 'center'})
-      .textColor("#ffffff")
-      .text('The world is yours to feast upon.')
-      .centerHorizontal()
-      .attr({
-        y: Crafty.viewport.height / 2 + 100,
-      });
+  Crafty.e('AdvanceOnKeypress').nextScene('TitleScreen');
   });
 });
 
