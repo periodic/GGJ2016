@@ -135,16 +135,19 @@ define(['crafty', 'constants', 'player', 'enemy', 'tiles', 'map', 'util/center_t
     Crafty.e('AdvanceOnKeypress').nextScene('Level');
   });
 
+  Crafty.audio.add('VictoryShout', 'assets/Sound/finalvictoryshout.mp3');
   Crafty.scene('Victory', function () {
     Crafty.background('#000000');
 
-     writeText([
-          ['You have defeated those who would banish you.', 36, false],
-          ['The world is yours to feast upon.', 36, false],
-          ['Created by: Andrew Haven, Brian Torrence, Lindsay Haven, and Zoe Patrick.', 24, false],
-      ]);
+    writeText([
+      ['You have defeated those who would banish you.', 36, false],
+      ['The world is yours to feast upon.', 36, false],
+      ['Created by: Andrew Haven, Brian Torrence, Lindsay Haven, and Zoe Patrick.', 24, false],
+    ]);
 
-  Crafty.e('AdvanceOnKeypress').nextScene('TitleScreen');
+    Crafty.audio.play('VictoryShout', 1, k.volume.victoryShout);
+
+    Crafty.e('AdvanceOnKeypress').nextScene('TitleScreen');
   });
 });
 
