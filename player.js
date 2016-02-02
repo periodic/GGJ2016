@@ -53,6 +53,9 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
       this._healthBar = Crafty.e("HealthBar")
         .color(k.player.healthBar.color);
     },
+    remove: function () {
+      Crafty.audio.stop('DemonMovement');
+    },
     push: function (direction, distance) {
       var velocity = (new Crafty.math.Vector2D(- direction.x, - direction.y))
           .normalize()
