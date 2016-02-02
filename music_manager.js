@@ -2,7 +2,7 @@
  * An audio manager to prevent sound overlap.
  */
 
-define(['crafty'], function (Crafty) {
+define(['crafty', 'constants'], function (Crafty, k) {
 
   Crafty.c('MusicManager', {
     required: 'Storage',
@@ -15,7 +15,7 @@ define(['crafty'], function (Crafty) {
       console.log('Starting music.');
       if (!this._loaded) {
         log('Playing ' + this._soundId);
-        Crafty.audio.play(this._soundId, -1);
+        Crafty.audio.play(this._soundId, -1, k.volume.backgroundMusic);
         this._loaded = true;
       }
     },

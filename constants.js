@@ -98,6 +98,19 @@ define({
     connectedness: 0.2,
   },
 
+  volume: {
+    backgroundMusic: 1.0,
+    maleDeath: 1.0,
+    femaleDeath: 1.0,
+    gunShot: 0.2,
+    meleeHit: 1.0, 
+    
+    demonSummon: 0.75,
+    demonDeath: 1.0,
+    demonHurt: 1.0,
+    demonMovement: 0.7,
+  },
+
   NORTH: 0,
   EAST: 1,
   SOUTH: 2,

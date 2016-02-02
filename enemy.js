@@ -118,7 +118,7 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
     },
     events: {
       Death: function () {
-        Crafty.audio.play('MaleDeath');
+        Crafty.audio.play('MaleDeath', 1, k.volume.maleDeath);
       },
       PlayerInRange: function () {
         this._attackPlayer();
@@ -130,7 +130,7 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
         this.stopShooting();
       },
       ShotFired: function () {
-        Crafty.audio.play('GunShot', -1, 0.5);
+        Crafty.audio.play('GunShot', 1, k.volume.gunShot);
       },
     },
     _attackPlayer: function () {
@@ -173,7 +173,7 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
     },
     events: {
       Death: function () {
-        Crafty.audio.play('MaleDeath');
+        Crafty.audio.play('MaleDeath', 1, k.volume.maleDeath);
       },
       PlayerInRange: function () {
         this.delay(this._attackPlayer, 100, -1);
@@ -191,7 +191,7 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
 
         player.push(hitData[0].normal, k.enemy.brute.knockbackDistance);
 
-        Crafty.audio.play('MeleeHit');
+        Crafty.audio.play('MeleeHit', 1, k.volume.meleeHit);
 
         this.cancelDelay(this.resetHitChecks);
         this.delay(this.resetHitChecks, 500);
@@ -228,7 +228,7 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
     },
     events: {
       Death: function () {
-        Crafty.audio.play('FemaleDeath');
+        Crafty.audio.play('FemaleDeath', 1, k.volume.femaleDeath);
       },
       PlayerInRange: function () {
         this._attackPlayer();
@@ -240,7 +240,7 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
         this.stopShooting();
       },
       ShotFired: function () {
-        Crafty.audio.play('GunShot', -1, 0.5);
+        Crafty.audio.play('GunShot', 1, k.volume.gunShot);
       },
     },
     _attackPlayer: function () {

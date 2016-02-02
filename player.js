@@ -48,7 +48,7 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
         this.addComponent('WiredHitBox');
       }
 
-      Crafty.audio.play('DemonSummon');
+      Crafty.audio.play('DemonSummon', 1, k.volume.demonSummon);
 
       this._healthBar = Crafty.e("HealthBar")
         .color(k.player.healthBar.color);
@@ -77,12 +77,12 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
       HealthChanged: function (obj) {
         this._healthBar.percent(this.currentHealth() / this.maxHealth());
         if (this.currentHealth() <= 0) {
-          Crafty.audio.play('DemonDeath');
+          Crafty.audio.play('DemonDeath', 1, k.volume.demonDeath);
           Crafty.scene('Death');
         }
       },
       Hit: function () {
-        Crafty.audio.play('DemonHurt');
+        Crafty.audio.play('DemonHurt', 1, k.volume.demonHurt);
       },
       MaxHealthChanged: function (obj) {
         this._healthBar.percent(this.currentHealth() / this.maxHealth());
@@ -90,10 +90,10 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
       NewDirection: function () {
         if (this._vx !== 0 || this._vy !== 0) {
           if (!Crafty.audio.isPlaying('DemonMovement')) {
-            Crafty.audio.play('DemonMovement', -1);
+            Crafty.audio.play('DemonMovement', -1, k.volume.demonMovement);
           }
         } else {
-          Crafty.audio.stop('DemonMovement', -1);
+          Crafty.audio.stop('DemonMovement');
         }
       },
       Moved: function (e) {

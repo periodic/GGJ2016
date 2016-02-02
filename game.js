@@ -8,7 +8,8 @@ define(['constants', 'scenes', 'crafty', 'music_manager', 'buttons'], function (
   Crafty.audio.setChannels(10);
 
   Crafty.audio.add('BackgroundMusic', 'assets/Sound/soundtrack.mp3');
-  Crafty.e('MusicManager').musicManager('BackgroundMusic');
+
+  Crafty.e('MusicManager').musicManager('BackgroundMusic').start();
   Crafty.e('MuteButton').absolutePosition({
     x: 10,
     y: -42,
