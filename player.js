@@ -13,8 +13,13 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
 
   Crafty.sprite('assets/Sprites/playerbullet.png', {PlayerBulletSprite: [0, 0, 18, 18]})
 
+  Crafty.audio.add('DemonDeath', 'assets/Sound/demondeath1.mp3');
+  Crafty.audio.add('DemonHurt', 'assets/Sound/demonhurt1.mp3');
+  Crafty.audio.add('DemonMovement', 'assets/Sound/demonmovement1.mp3');
+  Crafty.audio.add('DemonSummon', 'assets/Sound/demonsummon1.mp3');
+
   Crafty.c('Player', {
-    required: '2D, Canvas, Fourway, Collision, Color, Center, Player1, Health, SpriteAnimation, Delay',
+    required: '2D, Canvas, Fourway, Collision, Color, Center, Player1, Health, SpriteAnimation, Delay, Gun',
     init: function () {
       this.attr({
           w: k.player.width,
@@ -29,18 +34,12 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
           k.player.collision.xMin, k.player.collision.yMax,
           k.player.collision.xMax, k.player.collision.yMax,
           k.player.collision.xMax, k.player.collision.yMin)
-      this._gun = Crafty.e('Gun')
-        .attr({
-          w: this._w,
-          h: this._h,
-        })
-        .sprite('PlayerBulletSprite')
-        .bulletSize(18, 18)
         .fireRate(k.player.fireRate)
+        .bulletSprite('PlayerBulletSprite')
+        .bulletSize(18, 18)
         .bulletDamage(k.player.bulletDamage)
         .bulletSpeed(k.player.bulletSpeed)
         .additionalTargets(['Enemy']);
-      this.attach(this._gun);
 
       this.reel('Walking', 1200, [[0,0], [1,0], [2,0], [3,0], [2,0], [1,0]]);
       this.animate('Walking', -1);
@@ -49,6 +48,8 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
         this.addComponent('WiredHitBox');
       }
 
+      Crafty.audio.play('DemonSummon');
+
       this._healthBar = Crafty.e("HealthBar")
         .color(k.player.healthBar.color);
     },
@@ -56,8 +57,6 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
       var velocity = (new Crafty.math.Vector2D(- direction.x, - direction.y))
           .normalize()
           .scale(1000 * distance / k.player.knockbackDuration);
-
-      console.log("Knockback", velocity);
 
       this.disableControl();
       this.attr({
@@ -75,6 +74,28 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
       this.enableControl();
     },
     events: {
+      HealthChanged: function (obj) {
+        this._healthBar.percent(this.currentHealth() / this.maxHealth());
+        if (this.currentHealth() <= 0) {
+          Crafty.audio.play('DemonDeath');
+          Crafty.scene('Death');
+        }
+      },
+      Hit: function () {
+        Crafty.audio.play('DemonHurt');
+      },
+      MaxHealthChanged: function (obj) {
+        this._healthBar.percent(this.currentHealth() / this.maxHealth());
+      },
+      NewDirection: function () {
+        if (this._vx !== 0 || this._vy !== 0) {
+          if (!Crafty.audio.isPlaying('DemonMovement')) {
+            Crafty.audio.play('DemonMovement', -1);
+          }
+        } else {
+          Crafty.audio.stop('DemonMovement', -1);
+        }
+      },
       Moved: function (e) {
         if (this.hit('ImpassableTile')) {
           if (e.axis == 'x') {
@@ -85,26 +106,19 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
           }
         }
       },
+      Shoot: function () {
+        this.startShooting();
+      },
+      StopShoot: function () {
+        this.stopShooting();
+      },
+      ShotFired: function () {
+        // Need audio.
+      },
       TargetMoved: function () {
         var mouse = new Crafty.math.Vector2D(Crafty.mousePos.x, Crafty.mousePos.y);
         var d = mouse.clone().subtract(this.center()).normalize();
-        this._gun.direction(d);
-      },
-      Shoot: function () {
-        this._gun.startShooting();
-      },
-      StopShoot: function () {
-        this._gun.stopShooting();
-      },
-      HealthChanged: function (obj) {
-        this._healthBar.percent(this.currentHealth() / this.maxHealth());
-        if (this.currentHealth() <= 0) {
-          console.log("You died.");
-          Crafty.scene('Death');
-        }
-      },
-      MaxHealthChanged: function (obj) {
-        this._healthBar.percent(this.currentHealth() / this.maxHealth());
+        this.direction(d);
       },
     },
   });

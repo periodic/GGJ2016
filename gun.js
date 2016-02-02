@@ -50,8 +50,8 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
       }
       return this._additionalTargets;
     },
-    sprite: function (sprite) {
-      this._sprite = sprite;
+    bulletSprite: function (bulletSprite) {
+      this._bulletSprite = bulletSprite;
       return this;
     },
     bulletSize: function(w, h) {
@@ -78,7 +78,8 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
         var bullet = Crafty.e('Bullet')
           .center(position)
           .damage(this._bulletDamage)
-          .sprite(this._sprite)
+          .trigger('Hit')
+          .bulletSprite(this._bulletSprite)
           .direction(velocity)
           .attr({
             w: this._bulletW,
@@ -89,6 +90,7 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
         this._additionalTargets.forEach(function (targetType) {
           bullet.checkHits(targetType);
         });
+        this.trigger('ShotFired');
       } else {
         this.cancelDelay(this._fireProjectile);
         this._isShooting = false;
@@ -111,8 +113,8 @@ define(['crafty', 'constants', 'util/center'], function (Crafty, k) {
         .collision()
         .checkHits('ImpassableTile');
     },
-    sprite: function (sprite) {
-      this.addComponent(sprite);
+    bulletSprite: function (bulletSprite) {
+      this.addComponent(bulletSprite);
       return this;
     },
     damage: function (damage) {
