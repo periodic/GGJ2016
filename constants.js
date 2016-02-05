@@ -67,11 +67,12 @@ define({
   layers: {
     background: 1,
     decals: 2,
-    obstacles: 3,
-    enemies: 4,
-    player: 5,
-    bullets: 6,
+    enemies: 3,
+    player: 4,
+    bullets: 5,
+    obstacles: 6,
     ui: 7,
+    mouse: 8,
   },
 
   bullet: {
@@ -89,12 +90,12 @@ define({
   },
 
   map: {
-    rows: 3,
-    columns: 5,
+    rows: 4,
+    columns: 10,
     originR: 0,
     originC: 0,
-    exitR: 2,
-    exitC: 4,
+    exitR: 3,
+    exitC: 9,
     connectedness: 0.2,
   },
 

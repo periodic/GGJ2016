@@ -36,7 +36,7 @@ define([
           if (directions) {
             if (typeof(directions) !== "object") debugger;
 
-            var room = Crafty.e('Room').room(directions);
+            var room = Crafty.e('Room').room(r, c, directions);
 
             if ((r == k.map.originR && c == k.map.originC)) {
               room.attach(Crafty.e('StartingCircle').center(room.center()));
@@ -57,7 +57,7 @@ define([
             room.attr({
               x: c * roomWidth + baseOffsetX,
               y: r * roomHeight + baseOffsetY,
-            });
+            }, true);
           }
         });
       });
@@ -67,6 +67,8 @@ define([
   Crafty.c('Room', {
     required: '2D, Canvas, DebugRectangle, Center, Collision',
     _template: undefined,
+    _r: 0, // for tracking where this room is.
+    _c: 0, // for tracking where this room is.
     init: function () {
       this.attr({
           w: k.tile.height * k.room.width,
@@ -76,21 +78,34 @@ define([
           z: k.layers.background,
         })
         .origin('center')
-        .collision()
-        .checkHits('Player');
+        .collision();
+        //.checkHits('Player');
       if (k.debug) {
         this.debugStroke("green")
           .debugRectangle(this);
       }
     },
 
-    room: function (directions) {
+    room: function (r, c, directions) {
+      this._r = r;
+      this._c = c;
+
       var template = this._chooseTemplate(directions);
 
       // number of turns from template to directions.
       var turns = this._canFitToTemplate(template.exits, directions);
 
-      this.addComponent(template.sprite);
+      this.addComponent(template.floorSprite);
+
+      this.attach(Crafty.e('2D, Canvas')
+        .addComponent(template.wallSprite)
+        .attr({
+          x: this._x,
+          y: this._y,
+          w: this._w,
+          h: this._h,
+          z: k.layers.obstacles,
+        }));
 
       for (var r = 0; r < k.room.height; r++) {
         for (var c = 0; c < k.room.width; c++) {
@@ -104,7 +119,6 @@ define([
               Crafty.e('Wall').attr({
                 x: x,
                 y: y,
-                z: k.layers.obstacles,
               }));
           }
         }
@@ -139,7 +153,7 @@ define([
     },
 
     events: {
-      HitOn: function (hitData) {
+      PlayerEntered: function () {
         // Player has entered, turn on AI.
         Crafty.map.search(this, true).forEach(function (entity) {
           if (entity.has('Enemy')) {
@@ -147,8 +161,8 @@ define([
           }
         });
       },
-      HitOff: function () {
-        // Player has left, turn of AI.
+      PlayerExited: function () {
+        // Player has left, turn off AI.
         Crafty.map.search(this, true).forEach(function (entity) {
           if (entity.has('Enemy')) {
             entity.deactivate();

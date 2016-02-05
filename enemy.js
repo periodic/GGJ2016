@@ -26,7 +26,8 @@ define(['crafty', 'constants', 'util/center', 'util/health'], function (Crafty, 
   ];
 
   Crafty.c('Enemy', {
-    required: '2D, Canvas, Health, Motion, Collision, Center, Delay',
+    required: '2D, Canvas, Health, Motion, Center, Delay, Collision',
+    //required: '2D, Canvas, Health, Motion, Center, Delay',
     init: function () {
       this.attr({
         z: k.layers.enemies,

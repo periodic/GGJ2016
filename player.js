@@ -20,6 +20,7 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
 
   Crafty.c('Player', {
     required: '2D, Canvas, Fourway, Collision, Color, Center, Player1, Health, SpriteAnimation, Delay, Gun',
+    _rooms: [],
     init: function () {
       this.attr({
           w: k.player.width,
@@ -107,6 +108,28 @@ define(['crafty', 'constants', 'gun', 'util/center', 'util/health', 'util/health
           if (e.axis == 'y') {
             this.y = e.oldValue;
           }
+        }
+
+        var roomsHit = this.hit('Room');
+        if (roomsHit) {
+          // Remove unhit rooms
+          var oldRooms = [];
+          this._rooms.forEach(function (room) {
+            if (roomsHit.some(function (hitData) { return hitData.obj == room; })) {
+              oldRooms.push(room);
+            } else {
+              room.trigger('PlayerExited');
+            }
+          }, this);
+          this._rooms = oldRooms;
+
+          // add new rooms.
+          roomsHit.forEach(function (hitData) {
+            if (this._rooms.indexOf(hitData.obj) < 0) {
+              hitData.obj.trigger('PlayerEntered');
+              this._rooms.push(hitData.obj);
+            }
+          }, this);
         }
       },
       Shoot: function () {

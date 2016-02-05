@@ -4,7 +4,7 @@
 define(['crafty', 'constants'], function (Crafty, k) {
 
   Crafty.c('Tile', {
-    required: '2D, Color, Canvas', 
+    required: '2D', 
     init: function () {
       this.attr({
           w: k.tile.width,

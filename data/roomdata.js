@@ -26,10 +26,43 @@ define(['crafty', 'constants'], function (Crafty, k) {
       'Deadend2': [2, 1],
     });
 
+  Crafty.sprite(
+    k.tile.width * k.room.width,
+    k.tile.height * k.room.height,
+    'assets/Rooms/rooms-floors-sprite.png',
+    {
+      'DeadendFloor1': [2, 0],
+      'CrossingFloor1': [0, 0],
+      'CornerFloor1': [1, 0],
+      'HallwayFloor1': [0, 1],
+      'JunctionFloor1': [1, 1],
+      'CrossingFloor2': [1, 2],
+      'HallwayFloor2': [2, 2],
+      'CrossingFloor3': [0, 2],
+      'DeadendFloor2': [2, 1],
+    });
+
+  Crafty.sprite(
+    k.tile.width * k.room.width,
+    k.tile.height * k.room.height,
+    'assets/Rooms/rooms-walls-sprite.png',
+    {
+      'DeadendWall1': [2, 0],
+      'CrossingWall1': [0, 0],
+      'CornerWall1': [1, 0],
+      'HallwayWall1': [0, 1],
+      'JunctionWall1': [1, 1],
+      'CrossingWall2': [1, 2],
+      'HallwayWall2': [2, 2],
+      'CrossingWall3': [0, 2],
+      'DeadendWall2': [2, 1],
+    });
+
 
   return [{
     exits: [k.SOUTH,k.NORTH,k.EAST,k.WEST],
-    sprite: 'Crossing1',
+    floorSprite: 'CrossingFloor1',
+    wallSprite: 'CrossingWall1',
     room: [
       "XXXXXXXXX XXXXXXXXX",
       "XXXXXXXXX XXXXXXXXX",
@@ -53,7 +86,8 @@ define(['crafty', 'constants'], function (Crafty, k) {
     ],
   },{
     exits: [k.SOUTH,k.WEST],
-    sprite: 'Corner1',
+    floorSprite: 'CornerFloor1',
+    wallSprite: 'CornerWall1',
     room: [
       "XXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXX",
@@ -77,7 +111,8 @@ define(['crafty', 'constants'], function (Crafty, k) {
     ],
   },{
     exits: [k.SOUTH],
-    sprite: 'Deadend1',
+    floorSprite: 'DeadendFloor1',
+    wallSprite: 'DeadendWall1',
     room: [
       "XXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXX",
@@ -101,7 +136,8 @@ define(['crafty', 'constants'], function (Crafty, k) {
     ],
   },{
     exits: [k.SOUTH,k.NORTH],
-    sprite: 'Hallway1',
+    floorSprite: 'HallwayFloor1',
+    wallSprite: 'HallwayWall1',
     room: [
       "XXXXXXXXX XXXXXXXXX",
       "XXXXXXXXX XXXXXXXXX",
@@ -125,7 +161,8 @@ define(['crafty', 'constants'], function (Crafty, k) {
     ],
   },{
     exits: [k.SOUTH,k.EAST,k.WEST],
-    sprite: 'Junction1',
+    floorSprite: 'JunctionFloor1',
+    wallSprite: 'JunctionWall1',
     room: [
       "XXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXX",
@@ -149,7 +186,8 @@ define(['crafty', 'constants'], function (Crafty, k) {
     ],
   },{
     exits: [k.SOUTH],
-    sprite: 'Deadend2',
+    floorSprite: 'DeadendFloor2',
+    wallSprite: 'DeadendWall2',
     room: [
       "XXXXXXXXXXXXXXXXXXX",
       "XXXXXXXXXXXXXXXXXXX",
@@ -173,7 +211,8 @@ define(['crafty', 'constants'], function (Crafty, k) {
     ],
   },{
     exits: [k.SOUTH,k.NORTH,k.EAST,k.WEST],
-    sprite: 'Crossing3',
+    floorSprite: 'CrossingFloor3',
+    wallSprite: 'CrossingWall3',
     room: [
       "XXXXXXXXX XXXXXXXXX",
       "XXXXXXXXX XXXXXXXXX",
@@ -197,7 +236,8 @@ define(['crafty', 'constants'], function (Crafty, k) {
     ],
   },{
     exits: [k.SOUTH,k.NORTH,k.EAST,k.WEST],
-    sprite: 'Crossing2',
+    floorSprite: 'CrossingFloor2',
+    wallSprite: 'CrossingWall2',
     room: [
       "XXXXXXXXX XXXXXXXXX",
       "XXXXXXXXX XXXXXXXXX",
@@ -221,7 +261,8 @@ define(['crafty', 'constants'], function (Crafty, k) {
     ],
   },{
     exits: [k.SOUTH,k.NORTH],
-    sprite: 'Hallway2',
+    floorSprite: 'HallwayFloor2',
+    wallSprite: 'HallwayWall2',
     room: [
       "XXXXXXXXX XXXXXXXXX",
       "XXXXXXXXX XXXXXXXXX",
